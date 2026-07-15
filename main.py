@@ -55,9 +55,9 @@ class UpdateThread(QThread):
                 raise last_error
             
             base_urls = [
-                "https://raw.kkgithub.com/CreateDDy/EldenRing-Interactive-Map/main",
-                "https://ghproxy.net/https://raw.githubusercontent.com/CreateDDy/EldenRing-Interactive-Map/main",
-                "https://raw.githubusercontent.com/CreateDDy/EldenRing-Interactive-Map/main"
+                "https://raw.kkgithub.com/CreateDDy/EldenRing_MapInteractive/main",
+                "https://ghproxy.net/https://raw.githubusercontent.com/CreateDDy/EldenRing_MapInteractive/main",
+                "https://raw.githubusercontent.com/CreateDDy/EldenRing_MapInteractive/main"
             ]
 
             resp = None
