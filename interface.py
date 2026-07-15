@@ -270,7 +270,7 @@ class MainMenu(QWidget):
             }
         """)
 
-        self.btn_github.clicked.connect(lambda: webbrowser.open("https://github.com/ТВОЙ_ПРОФИЛЬ/EldenRingMap-Nexus"))
+        self.btn_github.clicked.connect(lambda: webbrowser.open("https://github.com/CreateDDy"))
         bottom_corner_layout = QHBoxLayout()
         bottom_corner_layout.addStretch() 
         bottom_corner_layout.addWidget(self.btn_github)
