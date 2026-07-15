@@ -1,10 +1,11 @@
 import sys
 import os
+import requests
 import json
 from components import MapMarker, RegionMarker, InteractiveMapViewer as InteractiveMapViewer
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QStackedWidget)
 from PyQt5.QtGui import QPixmap, QCursor
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from interface import MainMenu, MapScreen 
 from config import APP_VERSION, REGISTRY, DATA_MANIFEST, MAP_LAYERS, GAME_TITLE
 
@@ -20,6 +21,100 @@ def get_local_db_version():
     except Exception:
         return APP_VERSION
 
+class UpdateThread(QThread):
+    status_signal = pyqtSignal(str)
+    finished_signal = pyqtSignal(bool)
+
+    def __init__(self, current_version):
+        super().__init__()
+        self.current_version = str(current_version)
+
+    def run(self):
+        try:
+            self.status_signal.emit("Checking for database updates...")
+            
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+
+            def fetch_with_retry(url, max_retries=3):
+                import time
+                last_error = None
+                session = requests.Session()
+                session.trust_env = False 
+                
+                for attempt in range(max_retries):
+                    try:
+                        r = session.get(url, headers=headers, timeout=(10, 30))
+                        if r.status_code == 200:
+                            return r
+                        else:
+                            last_error = Exception(f"HTTP Status: {r.status_code}")
+                    except Exception as e:
+                        last_error = e
+                    
+                    time.sleep(1)
+                raise last_error
+            
+            base_urls = [
+                "https://raw.kkgithub.com/CreateDDy/EldenRing-Interactive-Map/main",
+                "https://ghproxy.net/https://raw.githubusercontent.com/CreateDDy/EldenRing-Interactive-Map/main",
+                "https://raw.githubusercontent.com/CreateDDy/EldenRing-Interactive-Map/main"
+            ]
+
+            resp = None
+            active_base_url = None
+            last_network_error = None
+
+            for url in base_urls:
+                try:
+                    resp = fetch_with_retry(f"{url}/version.json", max_retries=2)
+                    active_base_url = url
+                    break  
+                except Exception as e:
+                    last_network_error = e
+                    continue
+
+            if not resp:
+                raise Exception(f"Все серверы обновлений недоступны. Последний сбой: {last_network_error}")
+            
+            data = resp.json()
+            remote_version = data.get("db_version", "1.2.2")
+
+            def parse_v(v_str):
+                try:
+                    return tuple(map(int, str(v_str).split('.')))
+                except ValueError:
+                    return (0, 0, 0)
+                
+            if parse_v(remote_version) > parse_v(self.current_version):
+                self.status_signal.emit("Loading new data...")
+                files_to_download = data.get("files", [])
+                
+                for file_path in files_to_download:
+                    safe_path = file_path.replace("/", os.sep)
+                    absolute_safe_path = os.path.join(base_path, safe_path)
+                    
+                    file_resp = fetch_with_retry(f"{active_base_url}/{file_path}")
+                    
+                    os.makedirs(os.path.dirname(absolute_safe_path), exist_ok=True)
+                    with open(absolute_safe_path, 'wb') as f:
+                        f.write(file_resp.content)
+                
+                local_version_path = os.path.join(base_path, "version.json")
+                with open(local_version_path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=4, ensure_ascii=False)
+                            
+                self.finished_signal.emit(True)
+            else:
+                self.status_signal.emit("The databases are up to date.")
+                self.finished_signal.emit(False)
+                
+        except Exception as e:
+            error_text = str(e) if str(e) else type(e).__name__
+            self.status_signal.emit(f"Сбой: {error_text}")
+            print(f"Update failed: {error_text}") 
+            self.finished_signal.emit(False)
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -27,7 +122,11 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 1200, 800)
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
+        
+        # Сначала получаем версию с диска
         self.current_db_version = get_local_db_version()
+        
+        # Создаем меню ОДИН раз и сразу передаем версию
         menu_bg_path = os.path.join(base_path, "icons", "menu_bg.jpg")
         self.menu_screen = MainMenu(self.launch_map, menu_bg_path, self.current_db_version)
         self.stack.addWidget(self.menu_screen)
@@ -42,6 +141,11 @@ class MainWindow(QMainWindow):
             self.setCursor(self.custom_cursor)
         else:
             self.custom_cursor = None
+
+        self.updater = UpdateThread(self.current_db_version)
+        self.updater.status_signal.connect(self.update_status_bar)
+        self.updater.finished_signal.connect(self.on_update_finished)
+        self.updater.start()
 
     def launch_map(self, lang, profile_name="default"):
         
@@ -160,7 +264,18 @@ class MainWindow(QMainWindow):
     def switch_map_layer(self, path, zoom, layer):
         self.viewer.change_map(path, zoom, layer)
         self.map_screen.update_filters()
+    
 
+    def update_status_bar(self, message):
+        self.statusBar().showMessage(message, 5000)
+
+    def on_update_finished(self, updated):
+        if updated:
+            self.statusBar().showMessage("Update complete", 5000)
+            new_v = get_local_db_version()
+            self.current_db_version = new_v
+            self.menu_screen.version_label.setText(f"v{new_v}")
+        
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     style_path = os.path.join(base_path, "style.qss")

@@ -246,20 +246,12 @@ class MainMenu(QWidget):
         main_layout.addLayout(center_h_layout)
         main_layout.addStretch()
 
-        github_icon_path = os.path.join(base_path, "icons", "github.png") 
-        icon_size = 48    # Icon size
-        button_size = 56  # Zone sizd
+        # Размеры для всех нижних кнопок
+        icon_size = 64   
+        button_size = 64 
         
-        self.btn_github = QPushButton()
-        self.btn_github.setFixedSize(button_size, button_size)
-        self.btn_github.setCursor(Qt.PointingHandCursor)
-        
-        if os.path.exists(github_icon_path):
-            self.btn_github.setIcon(QIcon(github_icon_path))
-            self.btn_github.setIconSize(QSize(icon_size, icon_size))
-        else:
-            self.btn_github.setText("Git")
-        self.btn_github.setStyleSheet("""
+        # Общий стиль для круглых/квадратных прозрачных кнопок
+        transparent_btn_style = """
             QPushButton {
                 background-color: transparent;
                 border: none;
@@ -268,11 +260,42 @@ class MainMenu(QWidget):
                 background-color: rgba(255, 255, 255, 20);
                 border-radius: 5px;
             }
-        """)
+        """
 
+        self.btn_github = QPushButton()
+        self.btn_github.setFixedSize(button_size, button_size)
+        self.btn_github.setCursor(Qt.PointingHandCursor)
+        self.btn_github.setStyleSheet(transparent_btn_style)
+        github_icon_path = os.path.join(base_path, "icons", "github.png") 
+        if os.path.exists(github_icon_path):
+            self.btn_github.setIcon(QIcon(github_icon_path))
+            self.btn_github.setIconSize(QSize(icon_size, icon_size))
         self.btn_github.clicked.connect(lambda: webbrowser.open("https://github.com/CreateDDy"))
+
+        self.btn_itch = QPushButton()
+        self.btn_itch.setFixedSize(button_size, button_size)
+        self.btn_itch.setCursor(Qt.PointingHandCursor)
+        self.btn_itch.setStyleSheet(transparent_btn_style)
+        itch_icon_path = os.path.join(base_path, "icons", "itch.png") 
+        if os.path.exists(itch_icon_path):
+            self.btn_itch.setIcon(QIcon(itch_icon_path))
+            self.btn_itch.setIconSize(QSize(icon_size, icon_size))
+        self.btn_itch.clicked.connect(lambda: webbrowser.open("https://createdd.itch.io/elden-ring-interactive-map"))
+
+        self.btn_nexus = QPushButton()
+        self.btn_nexus.setFixedSize(button_size, button_size)
+        self.btn_nexus.setCursor(Qt.PointingHandCursor)
+        self.btn_nexus.setStyleSheet(transparent_btn_style)
+        nexus_icon_path = os.path.join(base_path, "icons", "nexus.png")
+        if os.path.exists(nexus_icon_path):
+            self.btn_nexus.setIcon(QIcon(nexus_icon_path))
+            self.btn_nexus.setIconSize(QSize(icon_size, icon_size))
+        self.btn_nexus.clicked.connect(lambda: webbrowser.open("https://www.nexusmods.com/eldenring/mods/10354"))
+
         bottom_corner_layout = QHBoxLayout()
         bottom_corner_layout.addStretch() 
+        bottom_corner_layout.addWidget(self.btn_itch)
+        bottom_corner_layout.addWidget(self.btn_nexus)
         bottom_corner_layout.addWidget(self.btn_github)
         
         main_layout.addLayout(bottom_corner_layout)
