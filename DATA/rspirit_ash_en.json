@@ -1,0 +1,172 @@
+{
+    "dlc": {
+        "rspirit_ash":[
+            {
+            "id": "rspirit_ash_01",
+            "type": "rspirit_ash",
+            "x": 2069,
+            "y": 4204,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_02",
+            "type": "rspirit_ash",
+            "x": 1710,
+            "y": 3375,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_03",
+            "type": "rspirit_ash",
+            "x": 1564,
+            "y": 4148,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_04",
+            "type": "rspirit_ash",
+            "x": 2003,
+            "y": 3676,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_05",
+            "type": "rspirit_ash",
+            "x": 1217,
+            "y": 3649,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_06",
+            "type": "rspirit_ash",
+            "x": 1224,
+            "y": 3475,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_07",
+            "type": "rspirit_ash",
+            "x": 1323,
+            "y": 3459,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_08",
+            "type": "rspirit_ash",
+            "x": 2603,
+            "y": 3323,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_09",
+            "type": "rspirit_ash",
+            "x": 2630,
+            "y": 3305,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_10",
+            "type": "rspirit_ash",
+            "x": 2756,
+            "y": 2857,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_11",
+            "type": "rspirit_ash",
+            "x": 2629,
+            "y": 3512,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_12",
+            "type": "rspirit_ash",
+            "x": 2477,
+            "y": 2487,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_13",
+            "type": "rspirit_ash",
+            "x": 2499,
+            "y": 2449,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_14",
+            "type": "rspirit_ash",
+            "x": 2428,
+            "y": 4339,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_15",
+            "type": "rspirit_ash",
+            "x": 1592,
+            "y": 3247,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_16",
+            "type": "rspirit_ash",
+            "x": 1297,
+            "y": 2962,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_17",
+            "type": "rspirit_ash",
+            "x": 1134,
+            "y": 3345,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_18",
+            "type": "rspirit_ash",
+            "x": 967,
+            "y": 3288,
+            "title": "Revered Spirit Ash"
+            },
+            {
+            "id": "rspirit_ash_19",
+            "type": "rspirit_ash",
+            "x": 1280,
+            "y": 3508,
+            "title": "Revered Spirit Ash",
+            "description": "Reward for defeating the glowing pot-headed undead"
+            },
+            {
+            "id": "rspirit_ash_20",
+            "type": "rspirit_ash",
+            "x": 2377,
+            "y": 4325,
+            "title": "Revered Spirit Ash",
+            "description": "Reward for defeating the Grand Inquisitor"
+            },
+            {
+            "id": "rspirit_ash_21",
+            "type": "rspirit_ash",
+            "x": 1612,
+            "y": 2578,
+            "title": "Revered Spirit Ash",
+            "description": "Reward for defeating the glowing pot-headed undead"
+            },
+            {
+            "id": "rspirit_ash_22",
+            "type": "rspirit_ash",
+            "x": 1216,
+            "y": 2741,
+            "title": "Revered Spirit Ash",
+            "description": "Reward for defeating the glowing pot-headed undead."
+            },
+            {
+            "id": "rspirit_ash_23",
+            "type": "rspirit_ash",
+            "x": 1148,
+            "y": 3327,
+            "title": "Revered Spirit Ash",
+            "description": "Reward for defeating the Grand Inquisitor"
+            }
+        ]   
+    }
+}
