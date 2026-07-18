@@ -1,0 +1,126 @@
+{
+    "talisman_radagon_scarseal": {
+        "name_ru": "Печать Радагона от шрамов",
+        "name_en": "Radagon's Scarseal",
+        "icon": "talisman_radagon_scarseal.png",
+        "type_ru": "Талисман",
+        "type_en": "Talisman",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.8,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Повышает силу, ловкость, выносливость и здоровье (+3). Увеличивает получаемый урон (+10%).",
+        "effects_en": "Increases Strength, Dexterity, Endurance, and Vigor (+3). Increases damage taken (+10%)."
+    },
+    "talisman_godfrey": {
+        "name_ru": "Знак Годфри",
+        "name_en": "Godfrey Icon",
+        "icon": "talisman_godfrey_icon.png",
+        "type_ru": "Талисман",
+        "type_en": "Talisman",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 1.2,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Повышает урон и силу заряжаемых заклинаний и навыков (+15%).",
+        "effects_en": "Enhances charged spells and skills (+15%)."
+    },
+    "talisman_blue_feathered_branchsword": {
+        "name_ru": "Талисман с синими перьями",
+        "name_en": "Blue-Feathered Branchsword",
+        "icon": "blue_feathered_branchsword.png",
+        "type_ru": "Талисман",
+        "type_en": "Talisman",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.9,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Повышает защиту при низком уровне здоровья.",
+        "effects_en": "Raises defense when HP is low."
+    },
+    "red_feathered_branchsword": {
+        "name_ru": "Меч с красными перьями",
+        "name_en": "Red-Feathered Branchsword",
+        "icon": "red_feathered_branchsword.png",
+        "type_ru": "Талисман",
+        "type_en": "Talisman",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 1.4,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Увеличивает силу атаки при низком здоровье",
+        "effects_en": "Raises attack power when HP is low"
+    }
+}

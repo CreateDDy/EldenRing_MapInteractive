@@ -1,0 +1,79 @@
+{
+    "surface": {
+        "walking_mausoleum": [
+            {
+                "id": "mausoleum_01",
+                "x": 3700,
+                "y": 8107,
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "С колокольчиком. Дублирует ЛЮБЫЕ воспоминания.",
+                "description_en": "With a bell. Duplicates ANY remembrances."
+            },
+            {
+                "id": "mausoleum_02",
+                "x": 2222,
+                "y": 4396,
+                "map_layer": "surface",
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "С колокольчиком. Дублирует ЛЮБЫЕ воспоминания.",
+                "description_en": "With a bell. Duplicates ANY remembrances."
+            },
+            {
+                "id": "mausoleum_03",
+                "x": 2501,
+                "y": 4410,
+                "map_layer": "surface",
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "БЕЗ колокольчика. Дублирует только воспоминания тайных боссов (не полубогов).",
+                "description_en": "NO bell. Duplicates only non-demigod (secret) bosses."
+            },
+            {
+                "id": "mausoleum_04",
+                "x": 2523,
+                "y": 4216,
+                "map_layer": "surface",
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "БЕЗ колокольчика. Дублирует только воспоминания тайных боссов (не полубогов).",
+                "description_en": "NO bell. Duplicates only non-demigod (secret) bosses."
+            },
+            {
+                "id": "mausoleum_05",
+                "x": 5961,
+                "y": 1809,
+                "map_layer": "surface",
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "С колокольчиком. Дублирует ЛЮБЫЕ воспоминания.",
+                "description_en": "With a bell. Duplicates ANY remembrances."
+            },
+            {
+                "id": "mausoleum_06",
+                "x": 5041,
+                "y": 1737,
+                "map_layer": "surface",
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "С колокольчиком. Дублирует ЛЮБЫЕ воспоминания.",
+                "description_en": "With a bell. Duplicates ANY remembrances."
+            }
+        ]
+    },
+    "underground": {
+        "walking_mausoleum": [
+            {
+                "id": "mausoleum_07",
+                "x": 3938,
+                "y": 3143,
+                "map_layer": "underground",
+                "name_ru": "Блуждающий мавзолей",
+                "name_en": "Walking Mausoleum",
+                "description_ru": "С колокольчиком. Дублирует ЛЮБЫЕ воспоминания",
+                "description_en": "With a bell. Duplicates ANY remembrances."
+            }
+        ]
+    }
+}

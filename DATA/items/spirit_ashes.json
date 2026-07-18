@@ -1,0 +1,74 @@
+{
+    "ashes_battlemage_hugues": {
+        "name_ru": "Прах боевого мага Гуго",
+        "name_en": "Battlemage Hugues Ashes",
+        "icon": "ashes_battlemage_hugues.png",
+        "type_ru": "Прах",
+        "type_en": "Spirit Ashes",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "summon_params": {
+            "fp_cost": 122,
+            "hp_cost": 0
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Призывает дух боевого мага Гуго.",
+        "effects_en": "Summons the spirit of Battlemage Hugues."
+    },
+    "black_knife_tiche": {
+        "name_ru": "Прах черного ножа Тихеи",
+        "name_en": "Black Knife Tiche Ashes",
+        "icon": "black_knife_tiche.png",
+        "type_ru": "Прах",
+        "type_en": "Spirit Ashes",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "summon_params": {
+            "fp_cost": 132,
+            "hp_cost": 0
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Призывает дух Тихеи, черного ножа. Очень быстрый и агрессивный дух, использующий силы Смерти.",
+        "effects_en": "Summons the spirit of Black Knife Tiche. A highly agile and aggressive spirit utilizing powers of Destined Death."
+    }
+}

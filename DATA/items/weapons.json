@@ -1,0 +1,186 @@
+{
+    "wpn_bloodhound_fang": {
+        "name_ru": "Клык ищейки",
+        "name_en": "Bloodhound's Fang",
+        "icon": "wpn_fang.png",
+        "weapon_type_ru": "Изогнутый двуручник",
+        "weapon_type_en": "Curved Greatsword",
+        "damage_type_ru": "Рубящий",
+        "damage_type_en": "Slash",
+        "skill_name_ru": "Приём ищейки",
+        "skill_name_en": "Bloodhound's Finesse",
+        "skill_cost": "8 ( - 12)",
+        
+        "attack": {
+            "physical": 141, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 100
+        },
+        "defense": {
+            "physical": 68, "magic": 36, "fire": 36, "lightning": 36, "holy": 36, "guard_boost": 44
+        },
+        "weight": 11.5,
+        
+        "scaling": {
+            "str": "D", "dex": "C", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 18, "dex": 17, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Накапливает кровотечение (55)",
+        "effects_en": "Causes blood loss buildup (55)"
+    },
+    "death_poker": {
+        "name_ru": "Жезл смерти",
+        "name_en": "Death Poker",
+        "icon": "death_poker.png",
+        "type_ru": "Двуручный меч",
+        "type_en": "Two-Handed Sword",
+        "weapon_type_ru": "Двуручный меч",
+        "weapon_type_en": "Two-Handed Sword",
+        "damage_type_ru": "Обычный/колющий",
+        "damage_type_en": "Standard/Pierce",
+        "skill_name_ru": "Укус пламени смерти",
+        "skill_name_en": "Ghostflame Ignition",
+        "skill_cost": "15 (10 10)",
+        
+        "attack": {
+            "physical": 123, "magic": 36, "fire": 0, "lightning": 0, "holy": 0, "crit": 100
+        },
+        "defense": {
+            "physical": 60, "magic": 39, "fire": 33, "lightning": 33, "holy": 33, "guard_boost": 39
+        },
+        "weight": 8.5,
+        
+        "scaling": {
+            "str": "D", "dex": "D", "int": "E", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 15, "dex": 17, "int": 11, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Накапливает обморожение (65)",
+        "effects_en": "Causes frost buildup (65)"
+    },
+    "death_ritual_spear": {
+        "name_ru": "Копьё смертельного ритуала",
+        "name_en": "Death Ritual Spear",
+        "icon": "death_ritual_spear.png",
+        "type_ru": "Копьё",
+        "type_en": "Spear",
+        "weapon_type_ru": "Копьё",
+        "weapon_type_en": "Spear",
+        "damage_type_ru": "Колющий",
+        "damage_type_en": "Pierce",
+        "skill_name_ru": "Ритуал призыва копья",
+        "skill_name_en": "Spearcall Ritual",
+        "skill_cost": "20 (- -)",
+        
+        "attack": {
+            "physical": 99, "magic": 64, "fire": 0, "lightning": 0, "holy": 0, "crit": 110
+        },
+        "defense": {
+            "physical": 54, "magic": 42, "fire": 27, "lightning": 27, "holy": 27, "guard_boost": 36
+        },
+        "weight": 6.5,
+        
+        "scaling": {
+            "str": "E", "dex": "D", "int": "D", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 14, "dex": 20, "int": 18, "fth": 0, "arc": 0
+        },
+        "effects_ru": "-",
+        "effects_en": "-"
+    },
+    "sacrificial_axe": {
+        "name_ru": "Жертвенный топор",
+        "name_en": "Sacrificial Axe",
+        "icon": "sacrificial_axe.png",
+        "type_ru": "Топор",
+        "type_en": "Axe",
+        "weapon_type_ru": "Топор",
+        "weapon_type_en": "Axe",
+        "damage_type_ru": "Обычный",
+        "damage_type_en": "Standard",
+        "skill_name_ru": "Дикие удары",
+        "skill_name_en": "Wild Strikes",
+        "skill_cost": "2 (10 15)",
+        
+        "attack": {
+            "physical": 133, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 100
+        },
+        "defense": {
+            "physical": 49, "magic": 33, "fire": 33, "lightning": 33, "holy": 33, "guard_boost": 33
+        },
+        "weight": 5.5,
+        
+        "scaling": {
+            "str": "D", "dex": "D", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 16, "dex": 10, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Восполняет ОК при убийстве врагов.",
+        "effects_en": "Restores FP upon defeating foes."
+    },
+    "nightrider_flail": {
+        "name_ru": "Цеп ночной конницы",
+        "name_en": "Nightrider Flail",
+        "icon": "nightrider_flail.png",
+        "type_ru": "Цеп",
+        "type_en": "Flail",
+        "weapon_type_ru": "Цеп",
+        "weapon_type_en": "Flail",
+        "damage_type_ru": "Дробящий",
+        "damage_type_en": "Strike",
+        "skill_name_ru": "Вращающаяся цепь",
+        "skill_name_en": "Spinning Chain",
+        "skill_cost": "8 (8 10)",
+        
+        "attack": {
+            "physical": 115, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 100
+        },
+        "defense": {
+            "physical": 37, "magic": 25, "fire": 25, "lightning": 25, "holy": 25, "guard_boost": 21
+        },
+        "weight": 6.0,
+        
+        "scaling": {
+            "str": "E", "dex": "C", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 10, "dex": 24, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Накапливает кровотечение (50)",
+        "effects_en": "Causes blood loss buildup (50)"
+    },
+    "weapon_nightrider_glaive": {
+        "name_ru": "Глефа ночной конницы",
+        "name_en": "Nightrider Glaive",
+        "icon": "weapon_nightrider_glaive.png",
+        "type_ru": "Алебарда",
+        "type_en": "Halberd",
+        "weapon_type_ru": "Алебарда",
+        "weapon_type_en": "Halberd",
+        "damage_type_ru": "Рубящий/колющий",
+        "damage_type_en": "Slash/Pierce",
+        "skill_name_ru": "Удар с разворота",
+        "skill_name_en": "Spinning Slash",
+        "skill_cost": "6 (- 12)",
+        
+        "attack": {
+            "physical": 129, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 100
+        },
+        "defense": {
+            "physical": 66, "magic": 42, "fire": 42, "lightning": 42, "holy": 42, "guard_boost": 50
+        },
+        "weight": 12.0,
+        
+        "scaling": {
+            "str": "C", "dex": "E", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 26, "dex": 10, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Уникальный вертикальный удар при силовых атаках, высокий множитель урона на Потоке.",
+        "effects_en": "Unique vertical strike on heavy attacks, high damage multiplier on Torrent."
+    }
+}

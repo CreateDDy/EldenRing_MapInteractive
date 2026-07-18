@@ -1,0 +1,116 @@
+{
+    "incantation_crucible_tail": {
+        "name_ru": "Атрибут рыцаря Горнила: хвост",
+        "name_en": "Aspect of the Crucible: Tail",
+        "icon": "spell_crucible_tail.png",
+        "type_ru": "Молитва",
+        "type_en": "Incantation",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 20,
+            "slots": 1,
+            "duration": "-",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 27, "arc": 0
+        },
+        "effects_ru": "Создает хвост Горнила, наносящий удар по области перед собой. Можно использовать в прыжке. Долгое нажатие увеличивает дальность и урон.",
+        "effects_en": "Creates a Crucible tail that strikes a wide area in front of the caster. Can be used while jumping. Hold to extend the sweep and damage."
+    },
+    "incantation_flame_fell_god": {
+        "name_ru": "Пламя падшего бога",
+        "name_en": "Flame of the Fell God",
+        "icon": "spell_flame_fell_god.png",
+        "type_ru": "Молитва",
+        "type_en": "Incantation",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "Огонь",
+        "damage_type_en": "Fire",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 34,
+            "slots": 2,
+            "duration": "-",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 41, "arc": 0
+        },
+        "effects_ru": "Призывает огненный шар, поджигающий область при взрыве",
+        "effects_en": "Summons a ball of fire that ignites the area upon explosion"
+    },
+    "incantation_vykes_dragonbolt": {
+        "name_ru": "Драконий удар Вика",
+        "name_en": "Vyke's Dragonbolt",
+        "icon": "spell_vykes_dragonbolt.png",
+        "type_ru": "Молитва",
+        "type_en": "Incantation",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "Молния",
+        "damage_type_en": "Lightning",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 35,
+            "slots": 1,
+            "duration": "70с",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 0, "fth": 23, "arc": 0
+        },
+        "effects_ru": "Наделяет оружие в правой руке силой молнии. Увеличивает получаемый физический урон.",
+        "effects_en": "Enchants right-hand weapon with lightning. Increases physical damage taken."
+    }
+}

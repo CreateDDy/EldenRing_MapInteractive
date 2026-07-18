@@ -1,0 +1,87 @@
+{
+    "surface": [
+        {
+            "id": "evergaol_1",
+            "x": 4207,
+            "y": 7665,
+            "name_ru": "Узилище одинокой ищейки",
+            "name_en": "Forlorn Hound Evergaol",
+            "loot_items": ["wpn_bloodhound_fang"]
+        },
+        {
+            "id": "evergaol_2",
+            "x": 3643,
+            "y": 6999,
+            "name_ru": "Узилище на Грозовом холме",
+            "name_en": "Stormhill Evergaol",
+            "loot_items": ["incantation_crucible_tail"]
+        },
+        {
+            "id": "evergaol_3",
+            "x": 3601,
+            "y": 7959,
+            "name_ru": "Плачущее узилище",
+            "name_en": "Weeping Evergaol",
+            "loot_items": ["talisman_radagon_scarseal"]
+        },
+        {
+            "id": "evergaol_4",
+            "x": 1377,
+            "y": 5030,
+            "name_ru": "Узилище кукушки",
+            "name_en": "Cuckoo's Evergaol",
+            "loot_items": ["sorcery_greatblade_phalanx"]
+        },
+        {
+            "id": "evergaol_5",
+            "x": 2681,
+            "y": 6118,
+            "name_ru": "Узилище лиходея",
+            "name_en": "Malefactor's Evergaol",
+            "loot_items": ["incantation_flame_fell_god"]
+        },
+        {
+            "id": "evergaol_6",
+            "x": 5420,
+            "y": 6534,
+            "name_ru": "Узилище Селии",
+            "name_en": "Sellia Evergaol",
+            "loot_items": ["ashes_battlemage_hugues"]
+        },
+        {
+            "id": "evergaol_7",
+            "x": 2275,
+            "y": 3694,
+            "name_ru": "Узилище королевской могилы",
+            "name_en": "Royal Grave Evergaol",
+            "loot_items": ["sorcery_meteorite"]
+        },
+        {
+            "id": "evergaol_8",
+            "x": 2874,
+            "y": 3808,
+            "name_ru": "Узилище золотой династии",
+            "name_en": "Golden Lineage Evergaol",
+            "loot_items": ["talisman_godfrey"]
+        },
+        {
+            "id": "evergaol_9",
+            "x": 6479,
+            "y": 2278,
+            "name_ru": "Узилище соперника владыки",
+            "name_en": "Lord Contender's Evergaol",
+            "loot_items": [
+                "incantation_vykes_dragonbolt",
+                "armor_set_fingerprint"
+            ]
+        },
+        {
+            "id": "evergaol_10",
+            "x": 1378,
+            "y": 5696,
+            "name_ru": "Узилище главаря",
+            "name_en": "Ringleader Evergaol",
+            "loot_items": ["black_knife_tiche"]
+        }
+    ]
+}

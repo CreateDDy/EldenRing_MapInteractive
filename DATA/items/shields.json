@@ -1,0 +1,46 @@
+{
+    "twinbird_kite": {
+        "name_ru": "Треугольный щит с парой птиц",
+        "name_en": "Twinbird Kite Shield",
+        "icon": "twinbird_kite.png",
+        "type_ru": "Средний щит",
+        "type_en": "Medium Shield",
+        "weapon_type_ru": "Средний щит",
+        "weapon_type_en": "Medium Shield",
+        "damage_type_ru": "Дробящий",
+        "damage_type_en": "Strike",
+        "skill_name_ru": "Нет навыка",
+        "skill_name_en": "No Skill",
+        "skill_cost": "- (- -)",
+        
+        "attack": {
+            "physical": 78, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 100
+        },
+        "defense": {
+            "physical": 100, "magic": 49, "fire": 50, "lightning": 28, "holy": 35, "guard_boost": 55
+        },
+        "weight": 4.5,
+        
+        "scaling": {
+            "str": "D", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 12, "dex": 0, "int": 0, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Увеличивает силу атаки на 5% и сопротивление ко всем типам урона на 10%, если уровень здоровья ниже 20% (в PvP и PvE).",
+        "effects_en": "Increases attack power by 5% and damage negation by 10% when HP is below 20% (in PvP and PvE)."
+    },
+    "barricade_shield": {
+        "name_ru": "Заслон",
+        "name_en": "Barricade Shield",
+        "icon": "barricade_shield.png",
+        "type_ru": "Пепел войны",
+        "type_en": "Ash of War",
+        "skill_name_ru": "Заслон",
+        "skill_name_en": "Barricade Shield",
+        "effects_ru": "Наделяет щит навыком «Заслон». При применении навыка персонаж усиливает свой щит, повышая его устойчивость при блоке: для маленьких и средних щитов — уменьшает расход выносливости при блокировании атак на 50% и заставляет атаки противников отскакивать, как от больших щитов; для больших щитов — уменьшает расход выносливости при блокировании атак на 30%. В момент активации навыка щит блокирует атаки противника.",
+        "effects_en": "Imbues shield with the 'Barricade Shield' skill. When used, the character reinforces their shield, increasing its guard stability: For small and medium shields: reduces stamina consumption when blocking attacks by 50% and causes enemy attacks to bounce off just like they do from greatshields. For greatshields: reduces stamina consumption when blocking attacks by 30%. Upon activation, the shield blocks enemy attacks.",
+        "compatibility_ru": "Любые щиты",
+        "compatibility_en": "Any shield"
+    }
+}
