@@ -8,7 +8,7 @@ else:
 
 GAME_TITLE = "ELDEN RING MAP"
 
-APP_VERSION = "1.2.5"
+APP_VERSION = "1.2.6"
 
 #Структура меню (Сайдбар)
 # Ключи категорий и элементов должны строго совпадать с LOCALES и REGISTRY
