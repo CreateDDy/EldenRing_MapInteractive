@@ -6,7 +6,7 @@ from components import MapMarker, RegionMarker, InteractiveMapViewer as Interact
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QStackedWidget)
 from PyQt5.QtGui import QPixmap, QCursor
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from interface import MainMenu, MapScreen 
+from interface import MainMenu, MapScreen, ItemsScreen
 from config import APP_VERSION, REGISTRY, DATA_MANIFEST, MAP_LAYERS, GAME_TITLE
 
 if getattr(sys, 'frozen', False):
@@ -122,18 +122,16 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 1200, 800)
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
-        
-        # Сначала получаем версию с диска
         self.current_db_version = get_local_db_version()
-        
-        # Создаем меню ОДИН раз и сразу передаем версию
-        menu_bg_path = os.path.join(base_path, "icons", "menu_bg.jpg")
+        self.items_vault = self.load_items_database()
+
+        menu_bg_path = os.path.join(base_path, "icons", "system_icons", "menu_bg.jpg")
         self.menu_screen = MainMenu(self.launch_map, menu_bg_path, self.current_db_version)
+        self.menu_screen.switch_to_items_callback = self.launch_items
         self.stack.addWidget(self.menu_screen)
-        
         self.map_screen = None 
         
-        cursor_path = os.path.join(base_path, "icons", "cursor.png")
+        cursor_path = os.path.join(base_path, "icons", "system_icons", "cursor.png")
         cursor_img = QPixmap(cursor_path)
         if not cursor_img.isNull():
             scaled_cursor = cursor_img.scaled(48, 36, Qt.KeepAspectRatio, Qt.SmoothTransformation)
@@ -152,11 +150,14 @@ class MainWindow(QMainWindow):
         if self.map_screen:
             self.stack.removeWidget(self.map_screen)
             self.map_screen.deleteLater()
-
         self.data_vault = {}
         for key, base_name in DATA_MANIFEST.items():
-            file_path = os.path.join(base_path, "DATA", f"{base_name}_{lang}.json")
-            self.data_vault[key] = self.load_json(file_path)
+            unified_path = os.path.join(base_path, "DATA", f"{base_name}.json")
+            if os.path.exists(unified_path):
+                self.data_vault[key] = self.load_json(unified_path)
+            else:
+                legacy_path = os.path.join(base_path, "DATA", f"{base_name}_{lang}.json")
+                self.data_vault[key] = self.load_json(legacy_path)
 
         first_layer_key = list(MAP_LAYERS.keys())[0]
         first_layer_meta = MAP_LAYERS[first_layer_key]
@@ -179,9 +180,9 @@ class MainWindow(QMainWindow):
                 btn.clicked.connect(lambda checked=False, p=path, z=meta["zoom"], l=layer_id: self.switch_map_layer(p, z, l))
 
         for item_id, meta in REGISTRY.items():
-            icon_path = os.path.join(base_path, "icons", meta["icon"])
+            icon_path = os.path.join(base_path, "icons", "markers", meta["icon"])
             overlay_file = meta.get("overlay")
-            overlay_path = os.path.join(base_path, "icons", overlay_file) if overlay_file else None
+            overlay_path = os.path.join(base_path, "icons", "markers", overlay_file) if overlay_file else None
             
             custom_size = meta.get("icon_size")
             source_key = meta.get("source")
@@ -226,7 +227,7 @@ class MainWindow(QMainWindow):
                 
                 for pt in points:
                     fallback_label = meta.get(f"label_{lang}", meta.get("label_ru", "Unknown"))
-                    name = pt.get("title", pt.get("name", fallback_label))
+                    name = pt.get(f"name_{lang}", pt.get("title", pt.get("name", fallback_label)))
                     layer = pt.get("map_layer", "surface") 
                     
                     marker_id = str(pt.get("id", f"{item_id}_{int(pt.get('x', 0))}_{int(pt.get('y', 0))}"))
@@ -239,10 +240,29 @@ class MainWindow(QMainWindow):
                         marker = RegionMarker(icon_path, pt.get("x", 0), pt.get("y", 0), name, item_id, layer, self.map_screen.on_marker_toggled, marker_id, initial_completed)
                     else:
                         marker = MapMarker(icon_path, pt.get("x", 0), pt.get("y", 0), name, item_id, layer, overlay_path, custom_size, self.map_screen.on_marker_toggled, marker_id, initial_completed)
+                        marker.note = pt.get(f"description_{lang}", pt.get("description", ""))
+                        marker.loot = pt.get(f"loot_{lang}", pt.get("loot", ""))
+                        loot_ids = pt.get("loot_items", [])
+                        loot_data_list = []
                         
-                        marker.note = pt.get("description", "")
-                        marker.loot = pt.get("loot", "")
-                        marker.add_info_mark() 
+                        for loot_id in loot_ids:
+                            if loot_id in self.items_vault:
+                                db_item = self.items_vault[loot_id]
+                                resolved_item = db_item.copy()
+                                resolved_item["name"] = db_item.get(f"name_{lang}", db_item.get("name_ru", "Предмет"))
+                                w_type = db_item.get(f"weapon_type_{lang}", "-")
+                                resolved_item["type"] = w_type if w_type != "-" else db_item.get(f"type_{lang}", "")
+                                
+                                resolved_item["damage_type"] = db_item.get(f"damage_type_{lang}", db_item.get("damage_type_ru", ""))
+                                resolved_item["skill_name"] = db_item.get(f"skill_name_{lang}", db_item.get("skill_name_ru", ""))
+                                resolved_item["effects"] = db_item.get(f"effects_{lang}", db_item.get("effects_ru", db_item.get(f"stats_{lang}", db_item.get("stats_ru", ""))))
+                                resolved_item["lang"] = lang 
+                                resolved_item["icon"] = db_item.get("icon", "default.png")
+                                
+                                loot_data_list.append(resolved_item)
+                                
+                        marker.loot_data = loot_data_list
+                        marker.add_info_mark()
                     
                     self.viewer.scene.addItem(marker)
                 
@@ -250,9 +270,36 @@ class MainWindow(QMainWindow):
                     self.map_screen._update_checkbox_text(item_id)
         
         self.map_screen.update_filters()
-        self.stack.setCurrentIndex(1)
+        self.stack.setCurrentWidget(self.map_screen)
 
+    def launch_items(self, lang):
+        if hasattr(self, 'items_screen') and self.items_screen:
+            self.stack.removeWidget(self.items_screen)
+            self.items_screen.deleteLater()
+        self.items_screen = ItemsScreen(self.items_vault, lambda: self.stack.setCurrentIndex(0), lang)
+        
+        self.stack.addWidget(self.items_screen)
+        self.stack.setCurrentWidget(self.items_screen)
             
+    def load_items_database(self):
+        items_db = {}
+        items_dir = os.path.join(base_path, "DATA", "items")
+        if not os.path.exists(items_dir):
+            os.makedirs(items_dir)
+            return items_db
+    
+        for filename in os.listdir(items_dir):
+            if filename.endswith(".json"):
+                filepath = os.path.join(items_dir, filename)
+                try:
+                    with open(filepath, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        items_db.update(data)
+                except Exception as e:
+                    print(f"Ошибка чтения базы предметов {filename}: {e}")
+                    
+        return items_db
+    
     def load_json(self, path):
         try:
             with open(path, "r", encoding="utf-8") as file:

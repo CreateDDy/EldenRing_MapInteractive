@@ -1,0 +1,368 @@
+{
+    "surface": {
+        "golden_seed": [
+            {
+                "id": "seed_01",
+                "type": "golden_seed",
+                "x": 1180,
+                "y": 8230,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Награда от Родерики, если отдать ей куколку на память в локации Лачуга на Грозовом холме.",
+                "name_en": "Golden Seed",
+                "description_en": "Obtained from Roderika after handing over the Chrysalids' Memento at Stormhill Shack."
+            },
+            {
+                "id": "seed_02",
+                "type": "golden_seed",
+                "x": 3749,
+                "y": 7314,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Могила героя окраин. Награда за убийство Изъязвлённого древесного духа.",
+                "name_en": "Golden Seed",
+                "description_en": "Reward for defeating the Ulcerated Tree Spirit in Fringefolk Hero's Grave."
+            },
+            {
+                "id": "seed_03",
+                "type": "golden_seed",
+                "x": 4656,
+                "y": 7326,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_04",
+                "type": "golden_seed",
+                "x": 4392,
+                "y": 6813,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Выпадает при убийстве Кеннета Хейта.",
+                "name_en": "Golden Seed",
+                "description_en": "Obtained by defeating Kenneth Haight."
+            },
+            {
+                "id": "seed_05",
+                "type": "golden_seed",
+                "x": 3501,
+                "y": 6852,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_06",
+                "type": "golden_seed",
+                "x": 3076,
+                "y": 6661,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Награда за убийство Изъязвлённого древесного духа в подземной части замка",
+                "name_en": "Golden Seed",
+                "description_en": "Dropped by the Ulcerated Tree Spirit in the depths of the castle.."
+            },
+            {
+                "id": "seed_07",
+                "type": "golden_seed",
+                "x": 3182,
+                "y": 6584,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_08",
+                "type": "golden_seed",
+                "x": 4163,
+                "y": 8344,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_09",
+                "type": "golden_seed",
+                "x": 2188,
+                "y": 5224,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_10",
+                "type": "golden_seed",
+                "x": 2509,
+                "y": 3651,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_11",
+                "type": "golden_seed",
+                "x": 1972,
+                "y": 3719,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_12",
+                "type": "golden_seed",
+                "x": 1923,
+                "y": 4617,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_13",
+                "type": "golden_seed",
+                "x": 1898,
+                "y": 4898,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_14",
+                "type": "golden_seed",
+                "x": 5463,
+                "y": 7110,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_15",
+                "type": "golden_seed",
+                "x": 5634,
+                "y": 6523,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_16",
+                "type": "golden_seed",
+                "x": 6082,
+                "y": 5586,
+                "name_ru": "Золотое семечко",
+                "description_ru": "",
+                "name_en": "Golden Seed",
+                "description_en": ""
+            },
+            {
+                "id": "seed_17",
+                "type": "golden_seed",
+                "x": 6336,
+                "y": 6102,
+                "name_ru": "Золотое семечко",
+                "description_ru": " Катакомбы мёртвых воинов. Награда за убийство Гнилостного древесного духа.",
+                "name_en": "Golden Seed",
+                "description_en": "War-Dead Catacombs. Reward for defeating the Putrid Tree Spirit."
+            },
+            {
+                "id": "seed_18",
+                "type": "golden_seed",
+                "x": 3041,
+                "y": 3385,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_19",
+                "type": "golden_seed",
+                "x": 2705,
+                "y": 3367,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_20",
+                "type": "golden_seed",
+                "x": 3328,
+                "y": 2784,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_21",
+                "type": "golden_seed",
+                "x": 3675,
+                "y": 2800,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_22",
+                "type": "golden_seed",
+                "x": 2463,
+                "y": 2951,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_23",
+                "type": "golden_seed",
+                "x": 2049,
+                "y": 2641,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_24",
+                "type": "golden_seed",
+                "x": 3838,
+                "y": 3232,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_25",
+                "type": "golden_seed",
+                "x": 3669,
+                "y": 3488,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_26",
+                "type": "golden_seed",
+                "x": 3648,
+                "y": 3625,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Награда за убийство Изъязвлённого древесного духа",
+                "name_en": "Golden Seed",
+                "description_en": "Dropped by the Ulcerated Tree Spirit"
+            },
+            {
+                "id": "seed_27",
+                "type": "golden_seed",
+                "x": 4282,
+                "y": 3642,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_28",
+                "type": "golden_seed",
+                "x": 4278,
+                "y": 3436,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Награда за убийство Изъязвлённого древесного духа",
+                "name_en": "Golden Seed",
+                "description_en": "Dropped by the Ulcerated Tree Spirit"
+            },
+            {
+                "id": "seed_29",
+                "type": "golden_seed",
+                "x": 5414,
+                "y": 3299,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_30",
+                "type": "golden_seed",
+                "x": 5789,
+                "y": 2814,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Катакомбы на Вершине великанов. Награда за убийство Изъязвлённого древесного духа.",
+                "name_en": "Golden Seed",
+                "description_en": "Mountaintops Catacombs. Reward for defeating the Ulcerated Tree Spirit."
+            },
+            {
+                "id": "seed_31",
+                "type": "golden_seed",
+                "x": 6310,
+                "y": 2058,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_32",
+                "type": "golden_seed",
+                "x": 6329,
+                "y": 2822,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_33",
+                "type": "golden_seed",
+                "x": 5501,
+                "y": 2512,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_34",
+                "type": "golden_seed",
+                "x": 5154,
+                "y": 1969,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_35",
+                "type": "golden_seed",
+                "x": 5641,
+                "y": 894,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Награда за убийство Гнилостного древесного духа в болоте красной гнили.",
+                "name_en": "Golden Seed",
+                "description_en": "Reward for defeating the Putrid Tree Spirit in the Scarlet Rot swamp."
+            },
+            {
+                "id": "seed_36",
+                "type": "golden_seed",
+                "x": 8467,
+                "y": 4416,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_37",
+                "type": "golden_seed",
+                "x": 8644,
+                "y": 4323,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            }
+        ]
+    },
+    "underground": {
+        "golden_seed": [
+            {
+                "id": "seed_38",
+                "type": "golden_seed",
+                "x": 4965,
+                "y": 6418,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_39",
+                "type": "golden_seed",
+                "x": 5579,
+                "y": 6852,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_40",
+                "type": "golden_seed",
+                "x": 5457,
+                "y": 6862,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_41",
+                "type": "golden_seed",
+                "x": 1888,
+                "y": 4292,
+                "name_ru": "Золотое семечко",
+                "name_en": "Golden Seed"
+            },
+            {
+                "id": "seed_42",
+                "type": "golden_seed",
+                "x": 1700,
+                "y": 5005,
+                "name_ru": "Золотое семечко",
+                "description_ru": "Награда за убийство Гнилостного древесного духа.",
+                "name_en": "Golden Seed",
+                "description_en": "Reward for defeating the Putrid Tree Spirit."
+            }
+        ]
+    }
+}

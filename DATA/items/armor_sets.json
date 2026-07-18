@@ -1,0 +1,67 @@
+{
+    "armor_set_fingerprint": {
+        "name_ru": "Комплект с отпечатком пальца",
+        "name_en": "Fingerprint Set",
+        "icon": "armor_fingerprint_set.png",
+        "type_ru": "Сет брони",
+        "type_en": "Armor Set",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 26.5, "strike": 23.6, "slash": 23.6, "pierce": 23.6,
+            "magic": 19.2, "fire": 24.9, "lightning": 13.7, "holy": 19.2
+        },
+        "resistances": {
+            "immunity": 77, "robustness": 143, "focus": 27, "vitality": 55, "poise": 51
+        },
+        "weight": 25.3,
+        
+        "scaling": { "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-" },
+        "requirements": { "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0 },
+        "effects_ru": "Обгоревший комплект брони Вика.",
+        "effects_en": "Charred armor set of Vyke."
+    },
+    
+    "armor_night_cavalry_set": {
+        "name_ru": "Комплект ночных всадников",
+        "name_en": "Night's Cavalry Set",
+        "icon": "armor_night_cavalry_set.png",
+        "type_ru": "Комплект брони",
+        "type_en": "Armor Set",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "-",
+        "damage_type_en": "-",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 27.4, "strike": 25.4, "slash": 27.4, "pierce": 26.5,
+            "magic": 21.7, "fire": 24.9, "lightning": 21.7, "holy": 24.9
+        },
+        "resistances": {
+            "immunity": 91, "robustness": 135, "focus": 57, "vitality": 57, "poise": 53
+        },
+        "weight": 30.5,
+        
+        "scaling": { "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-" },
+        "requirements": { "str": 0, "dex": 0, "int": 0, "fth": 0, "arc": 0 },
+        "effects_ru": "-",
+        "effects_en": "-"
+    }
+    
+
+}

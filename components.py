@@ -67,18 +67,15 @@ class MapMarker(QGraphicsPixmapItem):
         self.last_click_pos = None
 
     def add_info_mark(self):
-        if not getattr(self, "note", "") and not getattr(self, "loot", ""):
+        if not getattr(self, "note", "") and not getattr(self, "loot", "") and not getattr(self, "loot_data", []):
             return
-        info_path = os.path.join(base_path, "icons", "descr.png")
+        info_path = os.path.join(base_path, "icons", "system_icons", "descr.png")
         if not os.path.exists(info_path):
-            print(f"Icon not found: {info_path}")
             return
             
         info_pix = QPixmap(info_path).scaled(20, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        padding_x = int(self.base_pixmap.width() * 0.15)
-        padding_y = int(self.base_pixmap.height() * 0.15)
-        offset_x = self.base_pixmap.width() - info_pix.width() - padding_x
-        offset_y = padding_y
+        offset_x = self.base_pixmap.width() - info_pix.width()
+        offset_y = 0
         
         new_base = self.base_pixmap.copy()
         painter = QPainter(new_base)
@@ -89,7 +86,7 @@ class MapMarker(QGraphicsPixmapItem):
         if self.has_overlay and self.combined_pixmap:
             new_comb = self.combined_pixmap.copy()
             painter_comb = QPainter(new_comb)
-            painter_comb.drawPixmap(new_comb.width() - info_pix.width() - padding_x, offset_y, info_pix)
+            painter_comb.drawPixmap(new_comb.width() - info_pix.width(), 0, info_pix)
             painter_comb.end()
             self.combined_pixmap = new_comb
 
@@ -108,18 +105,19 @@ class MapMarker(QGraphicsPixmapItem):
         super().mousePressEvent(event)
 
     def process_single_click(self):
-        title = getattr(self, "name_text", "Unknonw object")
+        title = getattr(self, "name_text", "Unknown object")
         description = getattr(self, "note", "")
-        loot = getattr(self, "loot", "")
-
+        old_text_loot = getattr(self, "loot", "")
+        loot_data = getattr(self, "loot_data", []) # Достаем наши новые предметы
+        
         final_text = description
-        if loot:
-            final_text += f"\n\nЛут:\n{loot}"
+        if old_text_loot:
+            final_text += f"\n\nЛут:\n{old_text_loot}"
 
-        if not final_text:
+        if not final_text and not loot_data:
             return
 
-        self.info_dialog = MarkerInfoWindow(title, final_text)
+        self.info_dialog = MarkerInfoWindow(title, final_text, loot_data)
         self.info_dialog.adjustSize()
 
         if self.last_click_pos:

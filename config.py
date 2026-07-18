@@ -16,7 +16,9 @@ CATEGORIES_BASE = {
     "cat_locations": {
         "grace": "Благодати",
         "dungeon": "Подземелья",
-        "hub_with_grace": "Крепость Круглого стола"
+        #"hub_with_grace": "Крепость Круглого стола",
+        "mausoleum": "Блуждающий мавзолей",
+        "evergaols": "Узилище"
     },
     "cat_merchants": {
         "nomadic_merchant": "Торговцы"
@@ -29,13 +31,14 @@ CATEGORIES_BASE = {
     "cat_upgrades": {
         "golden_seed": "Золотое семечко",
         "sacred_tear": "Священная слеза"
-    }
+    },
 }
 
 CATEGORIES_DLC = {
     "cat_locations": {
         "grace_dlc": "Благодати",
-        "dungeon_dlc": "Подземелья"
+        "dungeon_dlc": "Подземелья",
+        "mausoleum_coffin_dlc": "Саркофаг воспоминаний"
         
     },
     "cat_upgrades_dlc": {
@@ -48,12 +51,15 @@ CATEGORIES_DLC = {
 DATA_MANIFEST = {
     "boss_data": "night_boss",
     "grace_data": "graces",
+    "evergaols_data": "evergaols",
     "merchant_data": "merchant",
     "dungeon_data": "dungeons",
     "seeds_data": "golden_seeds",
     "tears_data": "sacred_tears",
     "scadutree_data": "scadutree",
-    "rspirit_ash_data": "rspirit_ash"
+    "rspirit_ash_data": "rspirit_ash",
+    "mausoleum_data": "mausoleum",
+    "mausoleum_coffin_data": "mausoleum_coffin"
 }
 
 #Слои карты (Файлы подложек и стартовый масштаб с правильными путями)
@@ -84,7 +90,8 @@ REGISTRY = {
         "label_en": "Bell Bearing Hunter",
         "icon": "BB_hunter.png",
         "source": "boss_data",
-        "json_keys": ["BB_hunter"]
+        "json_keys": ["BB_hunter"],
+        "icon_size": 40
     },
     "grace": {
         "label": "Благодати",
@@ -122,15 +129,35 @@ REGISTRY = {
         "icon": "golden_seed.png",
         "source": "seeds_data",
         "json_keys": None,
-        "is_regional": True
+        "is_regional": True,
+        "icon_size": 40
     },
     "sacred_tear": {
-        "label": "Священная слеза",
+        "label_ru": "Священная слеза",
+        "label_en": "Sacred Tear",
         "icon": "sacred_tear.png",
         "source": "tears_data",
         "json_keys": None,
         "is_regional": True,
-        "icon_size": 60
+        "icon_size": 40
+    },
+    "mausoleum": {
+        "label_ru": "Блуждающий мавзолей",
+        "label_en": "Walking mausoleum",
+        "icon": "mausoleum.png",
+        "source": "mausoleum_data",
+        "json_keys": None,
+        "is_regional": True
+    },
+    "evergaols": {
+        "label_ru": "Узилище",
+        "label_en": "Evergaol",
+        "icon": "evergaols.png",
+        "source": "evergaols_data",
+        "json_keys": ["surface"],
+        "is_regional": True,
+        "icon_size": 50
+
     },
     
     # --- DLC РЕГИОН ---
@@ -155,7 +182,7 @@ REGISTRY = {
         "source": "scadutree_data",
         "json_keys": ["dlc"],
         "is_regional": True,
-        "icon_size": 64
+        "icon_size": 40
         
     },
     "rspirit_ash_dlc": {
@@ -164,7 +191,15 @@ REGISTRY = {
         "source": "rspirit_ash_data",
         "json_keys": ["dlc"],
         "is_regional": True,
-        "icon_size": 64
+        "icon_size": 40
+    },
+    "mausoleum_coffin_dlc": {
+        "label": "Саркофаг воспоминаний",
+        "icon": "mausoleum_coffin.png",
+        "source": "mausoleum_coffin_data",
+        "json_keys": ["dlc"],
+        "is_regional": True,
+        "icon_size": 40
     }
     
     
@@ -196,11 +231,14 @@ LOCALES = {
         "lbl_hub_with_grace": "Крепость Круглого стола",
         "lbl_golden_seed": "Золотое семечко",
         "lbl_sacred_tear": "Священная слеза",
+        "lbl_mausoleum": "Блуждающий мавзолей",
+        "lbl_evergaols": "Узилища",
         
         "lbl_grace_dlc": "Благодати",
         "lbl_dungeon_dlc": "Подземелья",
         "lbl_scadutree_dlc": "Осколок Древа Упадка",
-        "lbl_rspirit_ash_dlc": "Прах славного духа"
+        "lbl_rspirit_ash_dlc": "Прах славного духа",
+        "lbl_mausoleum_coffin_dlc": "Саркофаг воспоминаний"
     },
     "en": {
         "btn_show_all": "Show all",
@@ -226,10 +264,13 @@ LOCALES = {
         "lbl_hub_with_grace": "Roundtable Hold",
         "lbl_golden_seed": "Golden Seed",
         "lbl_sacred_tear": "Sacred Tear",
+        "lbl_mausoleum": "Walking mausoleum",
+        "lbl_evergaols": "Evergaols",
         
         "lbl_grace_dlc": "Graces",
         "lbl_dungeon_dlc": "Dungeons",
         "lbl_scadutree_dlc": "Scadutree Fragment",
-        "lbl_rspirit_ash_dlc": "Revered Spirit Ash"
+        "lbl_rspirit_ash_dlc": "Revered Spirit Ash",
+        "lbl_mausoleum_coffin_dlc": "Remembrance Coffin"
     }
 }

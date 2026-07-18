@@ -7,8 +7,8 @@ import webbrowser
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
                              QLineEdit, QApplication, QStackedWidget, QCheckBox, 
                              QLabel,QFrame, QToolButton, QGridLayout, QComboBox,
-                             QDialog)
-from PyQt5.QtGui import QPixmap, QPainter, QCursor, QIcon
+                             QDialog, QSplitter, QTreeWidget, QScrollArea,QTreeWidgetItem)
+from PyQt5.QtGui import QPixmap, QPainter, QCursor, QIcon, QColor
 from PyQt5.QtCore import Qt, QTimer, QSize
 from config import APP_VERSION, LOCALES, CATEGORIES_BASE, CATEGORIES_DLC
 
@@ -69,8 +69,6 @@ class CollapsibleSection(QWidget):
         title_text = self.toggle_btn.text().split(' ', 1)[1]
         self.toggle_btn.setText(f"{arrow} {title_text}")
         self.content_area.setVisible(not checked)
-
-
         
 class CustomInputDialog(QDialog):
     def __init__(self, parent=None, title="Новый профиль", label_text="Введите имя:"):
@@ -229,8 +227,8 @@ class MainMenu(QWidget):
         self.btn_map.clicked.connect(self.on_map_clicked)
         map_btn_container.addWidget(self.btn_lang)
         map_btn_container.addWidget(self.btn_map)
-        self.btn_items = QPushButton("Предметы (В разработке)")
-        self.btn_items.setEnabled(False) 
+        self.btn_items = QPushButton("Предметы")
+        self.btn_items.clicked.connect(self.on_items_clicked)
         self.btn_npc = QPushButton("База NPC (В разработке)")
         self.btn_npc.setEnabled(False)
         
@@ -266,7 +264,7 @@ class MainMenu(QWidget):
         self.btn_github.setFixedSize(button_size, button_size)
         self.btn_github.setCursor(Qt.PointingHandCursor)
         self.btn_github.setStyleSheet(transparent_btn_style)
-        github_icon_path = os.path.join(base_path, "icons", "github.png") 
+        github_icon_path = os.path.join(base_path, "icons", "system_icons", "github.png") 
         if os.path.exists(github_icon_path):
             self.btn_github.setIcon(QIcon(github_icon_path))
             self.btn_github.setIconSize(QSize(icon_size, icon_size))
@@ -276,7 +274,7 @@ class MainMenu(QWidget):
         self.btn_itch.setFixedSize(button_size, button_size)
         self.btn_itch.setCursor(Qt.PointingHandCursor)
         self.btn_itch.setStyleSheet(transparent_btn_style)
-        itch_icon_path = os.path.join(base_path, "icons", "itch.png") 
+        itch_icon_path = os.path.join(base_path, "icons", "system_icons", "itch.png") 
         if os.path.exists(itch_icon_path):
             self.btn_itch.setIcon(QIcon(itch_icon_path))
             self.btn_itch.setIconSize(QSize(icon_size, icon_size))
@@ -286,7 +284,7 @@ class MainMenu(QWidget):
         self.btn_nexus.setFixedSize(button_size, button_size)
         self.btn_nexus.setCursor(Qt.PointingHandCursor)
         self.btn_nexus.setStyleSheet(transparent_btn_style)
-        nexus_icon_path = os.path.join(base_path, "icons", "nexus.png")
+        nexus_icon_path = os.path.join(base_path, "icons", "system_icons", "nexus.png")
         if os.path.exists(nexus_icon_path):
             self.btn_nexus.setIcon(QIcon(nexus_icon_path))
             self.btn_nexus.setIconSize(QSize(icon_size, icon_size))
@@ -344,7 +342,7 @@ class MainMenu(QWidget):
         bottom_h_layout = QHBoxLayout()
         self.loading_icon = QLabel()
         
-        icon_path = os.path.join(".", "icons", "MENU_Loading_02.png")
+        icon_path = os.path.join(".", "icons", "system_icons", "MENU_Loading_02.png")
         pixmap = QPixmap(icon_path)
         
         if pixmap.isNull():
@@ -440,14 +438,14 @@ class MainMenu(QWidget):
         menu_texts = {
             "ru": {
                 "map": "Интерактивная карта",
-                "items": "Предметы (В разработке)",
+                "items": "Предметы",
                 "npc": "База NPC (В разработке)",
                 "create": "Создать",
                 "delete": "Удалить"
             },
             "en": {
                 "map": "Interactive Map",
-                "items": "Items (WIP)",
+                "items": "Items",
                 "npc": "NPC Database (WIP)",
                 "create": "New Profile",
                 "delete": "Delete"
@@ -502,6 +500,10 @@ class MainMenu(QWidget):
         super().resizeEvent(event)
         if self.loading_overlay.isVisible():
             self.loading_overlay.resize(self.size())
+
+    def on_items_clicked(self):
+        if hasattr(self, "switch_to_items_callback"):
+            self.switch_to_items_callback(self.current_lang)
 
 class MapScreen(QWidget):
     def __init__(self, viewer, back_callback, lang="ru", profile_name="default"):
@@ -748,13 +750,12 @@ class MapScreen(QWidget):
             self.save_to_json()
 
 class MarkerInfoWindow(QDialog):
-    def __init__(self, title, description, parent=None):
+    def __init__(self, title, description, loot_data=None, parent=None):
         super().__init__(parent)
-        
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Popup)
         self.setAttribute(Qt.WA_DeleteOnClose)
         
-        cursor_path = os.path.join(base_path, "icons", "cursor.png")
+        cursor_path = os.path.join(base_path, "icons", "system_icons", "cursor.png")
         if os.path.exists(cursor_path):
             cursor_img = QPixmap(cursor_path).scaled(48, 36, Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.setCursor(QCursor(cursor_img, 0, 0))
@@ -765,15 +766,8 @@ class MarkerInfoWindow(QDialog):
         layout.setSizeConstraint(QVBoxLayout.SetFixedSize)
         
         self.setStyleSheet("""
-            QDialog {
-                background-color: rgba(20, 20, 20, 245);
-                border: 2px solid #8b7355;
-                border-radius: 5px;
-            }
-            QLabel {
-                font-family: "Georgia", serif;
-                color: #e8dcc2;
-            }
+            QDialog { background-color: rgba(20, 20, 20, 245); border: 2px solid #8b7355; border-radius: 5px; }
+            QLabel { font-family: "Georgia", serif; color: #e8dcc2; }
         """)
         
         if title:
@@ -782,11 +776,631 @@ class MarkerInfoWindow(QDialog):
             title_label.setWordWrap(True)
             layout.addWidget(title_label)
         
-        desc_label = QLabel(description)
-        desc_label.setStyleSheet("font-size: 11pt; color: #cbd5e1;")
-        desc_label.setWordWrap(True)
-        
-        layout.addWidget(desc_label)
+        if description:
+            desc_label = QLabel(description)
+            desc_label.setStyleSheet("font-size: 11pt; color: #cbd5e1;")
+            desc_label.setWordWrap(True)
+            layout.addWidget(desc_label)
+
+        if loot_data:
+            current_lang = loot_data[0].get("lang", "ru")
+            loot_text = "Награды / Лут:" if current_lang == "ru" else "Rewards / Loot:"
+            
+            loot_title = QLabel(loot_text)
+            loot_title.setStyleSheet("color: #888888; font-size: 11px; margin-top: 5px;")
+            layout.addWidget(loot_title)
+            
+            for item in loot_data:
+                item_label = LootLabel(item)
+                layout.addWidget(item_label)
         
         self.setMinimumWidth(280)
         self.setMaximumWidth(320)
+
+class ItemTooltip(QWidget):
+    def __init__(self, item_data, parent=None):
+        super().__init__(parent)
+        self.setAttribute(Qt.WA_StyledBackground, True)
+        self.setWindowFlags(Qt.ToolTip | Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_ShowWithoutActivating)
+        
+        self.setStyleSheet("""
+            QWidget { background-color: #2b2b2b; border: 1px solid #4a4a4a; border-radius: 4px; }
+            QLabel { border: none; background: transparent; font-family: 'Georgia', serif; }
+        """)
+        
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(10, 10, 10, 10)
+        main_layout.setSpacing(6)
+        
+        lang = item_data.get("lang", "ru")
+        
+        # --- 1. ЗАГОЛОВОК ---
+        title = QLabel(item_data.get("name", "Unknown Item"))
+        title.setStyleSheet("color: #e8dcc2; font-size: 16px; font-weight: bold;")
+        title.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(title)
+        
+        main_layout.addWidget(self.create_divider())
+        
+        # --- 2. ИКОНКА ---
+        icon_name = item_data.get("icon", "default.png")
+        icon_path = os.path.join(base_path, "icons", "items", icon_name)
+        icon_label = QLabel()
+        icon_label.setAlignment(Qt.AlignCenter)
+        if os.path.exists(icon_path):
+            pix = QPixmap(icon_path).scaled(200, 200, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            icon_label.setPixmap(pix)
+        else:
+            icon_label.setFixedSize(200, 100)
+        main_layout.addWidget(icon_label)
+        main_layout.addWidget(self.create_divider())
+        
+        # --- 3. ТИП И НАВЫК ---
+        type_str = item_data.get("type", "")
+        if type_str and type_str != "-":
+            lbl = "Тип" if lang == "ru" else "Type"
+            main_layout.addWidget(self.create_centered_block(lbl, type_str))
+            main_layout.addWidget(self.create_divider())
+            
+        dmg_type = item_data.get("damage_type", "")
+        if dmg_type and dmg_type != "-":
+            lbl = "Тип урона" if lang == "ru" else "Damage Type"
+            main_layout.addWidget(self.create_centered_block(lbl, dmg_type))
+            main_layout.addWidget(self.create_divider())
+            
+        skill_name = item_data.get("skill_name", "")
+        if skill_name and skill_name != "-":
+            lbl = "Навык" if lang == "ru" else "Skill"
+            skill_cost = item_data.get("skill_cost", "-")
+            main_layout.addWidget(self.create_centered_block(lbl, f"{skill_name}   |   {skill_cost}"))
+            main_layout.addWidget(self.create_divider())
+        summon_params = item_data.get("summon_params", {})
+        if summon_params:
+            self.render_summon_params(main_layout, summon_params, lang)
+            main_layout.addWidget(self.create_divider())
+
+        # --- 4. ТАБЛИЦА СТАТОВ ИЛИ БРОНИ ---
+        attack_data = item_data.get("attack", {})
+        defense_data = item_data.get("defense", {})
+        resistances = item_data.get("resistances", {})
+        is_armor = "Броня" in type_str or "Сет" in type_str or "Armor" in type_str
+        if is_armor:
+            if defense_data or resistances:
+                self.render_armor_stats(main_layout, defense_data, resistances, item_data.get("weight", 0.0), lang)
+                main_layout.addWidget(self.create_divider())
+        else:
+            has_stats = False
+            if attack_data and any(v != 0 for v in attack_data.values()):
+                has_stats = True
+            if defense_data and any(v != 0 for v in defense_data.values()):
+                has_stats = True
+                
+            if has_stats:
+                self.render_stats_table(main_layout, attack_data, defense_data, item_data.get("weight", 0.0), lang)
+                main_layout.addWidget(self.create_divider())
+            
+        # --- 5. БОНУСЫ И ТРЕБОВАНИЯ ---
+        scaling = item_data.get("scaling", {})
+        reqs = item_data.get("requirements", {})
+        
+        has_scaling = any(v not in ["-", "", 0] for v in scaling.values())
+        has_reqs = any(v != 0 and v != "-" for v in reqs.values())
+        
+        if has_scaling or has_reqs:
+            self.render_scaling_block(main_layout, scaling, reqs, lang)
+            main_layout.addWidget(self.create_divider())
+
+        # --- 6. ПАРАМЕТРЫ МАГИИ (НОВЫЙ БЛОК) ---
+        magic_params = item_data.get("magic_params", {})
+        if magic_params:
+            self.render_magic_params(main_layout, magic_params, lang)
+            main_layout.addWidget(self.create_divider())
+
+        # --- 7. ЭФФЕКТЫ ---
+        effects = item_data.get("effects", "")
+        if effects and effects != "-":
+            eff_title = QLabel("Эффекты" if lang == "ru" else "Passive Effects")
+            eff_title.setStyleSheet("color: #e8dcc2; font-weight: bold; font-size: 12px;")
+            eff_title.setAlignment(Qt.AlignCenter)
+            main_layout.addWidget(eff_title)
+            
+            eff_lbl = QLabel(effects)
+            eff_lbl.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+            eff_lbl.setAlignment(Qt.AlignCenter)
+            eff_lbl.setWordWrap(True)
+            main_layout.addWidget(eff_lbl)
+
+    def create_divider(self):
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setStyleSheet("background-color: #4a4a4a;")
+        return line
+        
+    def create_centered_block(self, title_text, value_text):
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(2)
+        
+        title = QLabel(title_text)
+        title.setStyleSheet("color: #e8dcc2; font-weight: bold; font-size: 12px;")
+        title.setAlignment(Qt.AlignCenter)
+        
+        value = QLabel(value_text)
+        value.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+        value.setAlignment(Qt.AlignCenter)
+        
+        layout.addWidget(title)
+        layout.addWidget(value)
+        return widget
+    
+    def render_summon_params(self, main_layout, summon_params, lang):
+        lbl_title = QLabel("Параметры призыва" if lang == "ru" else "Summon Parameters")
+        lbl_title.setStyleSheet("color: #e8dcc2; font-weight: bold; font-size: 12px;")
+        lbl_title.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(lbl_title)
+        
+        grid = QGridLayout()
+        grid.setSpacing(4)
+        
+        fp_cost = summon_params.get("fp_cost", 0)
+        hp_cost = summon_params.get("hp_cost", 0)
+        
+        col = 0
+        if fp_cost > 0:
+            lbl_fp = QLabel("Расход ОК" if lang == "ru" else "FP Cost")
+            lbl_fp.setStyleSheet("color: #888; font-size: 11px;")
+            val_fp = QLabel(str(fp_cost))
+            val_fp.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+            val_fp.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            
+            grid.addWidget(lbl_fp, 0, col)
+            grid.addWidget(val_fp, 0, col + 1)
+            col += 2
+            
+        if hp_cost > 0:
+            lbl_hp = QLabel("Расход ОЗ" if lang == "ru" else "HP Cost")
+            lbl_hp.setStyleSheet("color: #888; font-size: 11px;")
+            val_hp = QLabel(str(hp_cost))
+            val_hp.setStyleSheet("color: #ff4a4a; font-size: 12px;") 
+            val_hp.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            
+            grid.addWidget(lbl_hp, 0, col)
+            grid.addWidget(val_hp, 0, col + 1)
+            
+        main_layout.addLayout(grid)
+
+    def render_magic_params(self, main_layout, magic_params, lang):
+        lbl_title = QLabel("Параметры" if lang == "ru" else "Parameters")
+        lbl_title.setStyleSheet("color: #e8dcc2; font-weight: bold; font-size: 12px;")
+        lbl_title.setAlignment(Qt.AlignCenter)
+        main_layout.addWidget(lbl_title)
+        
+        grid = QGridLayout()
+        grid.setSpacing(4)
+        
+        lbl_fp = QLabel("Расход ОК" if lang == "ru" else "FP Cost")
+        lbl_slots = QLabel("Ячейки" if lang == "ru" else "Slots")
+        lbl_dur = QLabel("Длительность" if lang == "ru" else "Duration")
+        lbl_price = QLabel("Цена" if lang == "ru" else "Sell Value")
+        
+        val_fp = QLabel(str(magic_params.get("fp_cost", "-")))
+        val_slots = QLabel(str(magic_params.get("slots", "-")))
+        val_dur = QLabel(str(magic_params.get("duration", "-")))
+        val_price = QLabel(str(magic_params.get("price", "-")))
+        
+        for lbl in [lbl_fp, lbl_slots, lbl_dur, lbl_price]:
+            lbl.setStyleSheet("color: #888; font-size: 11px;")
+        for val in [val_fp, val_slots, val_dur, val_price]:
+            val.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+            val.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            
+        grid.addWidget(lbl_fp, 0, 0)
+        grid.addWidget(val_fp, 0, 1)
+        grid.addWidget(lbl_slots, 0, 2)
+        grid.addWidget(val_slots, 0, 3)
+        
+        grid.addWidget(lbl_dur, 1, 0)
+        grid.addWidget(val_dur, 1, 1)
+        grid.addWidget(lbl_price, 1, 2)
+        grid.addWidget(val_price, 1, 3)
+        
+        main_layout.addLayout(grid)
+    
+    def render_armor_stats(self, main_layout, defense_data, resistances, weight, lang):
+        stats_layout = QGridLayout()
+        stats_layout.setSpacing(4)
+
+        if lang == "ru":
+            def_labels = ["Физич.", "Дробящий", "Рубящий", "Колющий", "Магия", "Огонь", "Молния", "Святое"]
+            res_labels = ["Иммунитет", "Живучесть", "Концент.", "Физ. мощь", "Баланс"]
+            header_def = "🛡 Защита"
+            header_res = "🛡 Сопротивляемость"
+            weight_text = "Вес"
+        else:
+            def_labels = ["Physical", "Strike", "Slash", "Pierce", "Magic", "Fire", "Lightning", "Holy"]
+            res_labels = ["Immunity", "Robustness", "Focus", "Vitality", "Poise"]
+            header_def = "🛡 Damage Negation"
+            header_res = "🛡 Resistance"
+            weight_text = "Weight"
+
+        def_keys = ["physical", "strike", "slash", "pierce", "magic", "fire", "lightning", "holy"]
+        def_colors = ["#cbd5e1", "#cbd5e1", "#cbd5e1", "#cbd5e1", "#5c92ff", "#ff6b4a", "#e6cc45", "#b388ff"]
+        res_keys = ["immunity", "robustness", "focus", "vitality", "poise"]
+
+        lbl_def_head = QLabel(header_def)
+        lbl_def_head.setStyleSheet("color: #d4a956; font-weight: bold; font-size: 13px;")
+        lbl_def_head.setAlignment(Qt.AlignCenter)
+        
+        lbl_res_head = QLabel(header_res)
+        lbl_res_head.setStyleSheet("color: #d4a956; font-weight: bold; font-size: 13px;")
+        lbl_res_head.setAlignment(Qt.AlignCenter)
+
+        stats_layout.addWidget(lbl_def_head, 0, 0, 1, 2)
+        stats_layout.addWidget(lbl_res_head, 0, 2, 1, 2)
+
+        for i in range(8):
+            lbl = QLabel(def_labels[i])
+            lbl.setStyleSheet(f"color: {def_colors[i]}; font-size: 12px;")
+            val = QLabel(str(defense_data.get(def_keys[i], 0)))
+            val.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+            val.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            
+            stats_layout.addWidget(lbl, i + 1, 0)
+            stats_layout.addWidget(val, i + 1, 1)
+        for i in range(5):
+            lbl = QLabel(res_labels[i])
+            lbl.setStyleSheet("color: #a89f91; font-size: 12px;")
+            val = QLabel(str(resistances.get(res_keys[i], 0)))
+            val.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+            val.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            
+            stats_layout.addWidget(lbl, i + 1, 2)
+            stats_layout.addWidget(val, i + 1, 3)
+
+        lbl_w = QLabel(weight_text)
+        lbl_w.setStyleSheet("color: #888; font-size: 12px; margin-top: 5px;")
+        val_w = QLabel(str(weight))
+        val_w.setStyleSheet("color: #cbd5e1; font-size: 12px; margin-top: 5px;")
+        val_w.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        
+        stats_layout.addWidget(lbl_w, 8, 2)
+        stats_layout.addWidget(val_w, 8, 3)
+
+        main_layout.addLayout(stats_layout)
+
+    def render_stats_table(self, main_layout, attack_data, defense_data, weight, lang):
+        stats_layout = QGridLayout()
+        stats_layout.setSpacing(4)
+        
+        lbl_atk = QLabel("⚔ Атака" if lang == "ru" else "⚔ Attack")
+        lbl_atk.setStyleSheet("color: #d4a956; font-weight: bold; font-size: 13px;")
+        lbl_atk.setAlignment(Qt.AlignCenter)
+        
+        lbl_def = QLabel("🛡 Защита" if lang == "ru" else "🛡 Defense")
+        lbl_def.setStyleSheet("color: #d4a956; font-weight: bold; font-size: 13px;")
+        lbl_def.setAlignment(Qt.AlignCenter)
+        
+        stats_layout.addWidget(lbl_atk, 0, 0, 1, 2)
+        stats_layout.addWidget(lbl_def, 0, 2, 1, 2)
+        
+        if lang == "ru":
+            rows = [
+                ("Физическ.", attack_data.get("physical", 0), defense_data.get("physical", 0), "#cbd5e1"),
+                ("Магия", attack_data.get("magic", 0), defense_data.get("magic", 0), "#5c92ff"),
+                ("Огонь", attack_data.get("fire", 0), defense_data.get("fire", 0), "#ff6b4a"),
+                ("Молния", attack_data.get("lightning", 0), defense_data.get("lightning", 0), "#e6cc45"),
+                ("Святое", attack_data.get("holy", 0), defense_data.get("holy", 0), "#b388ff"),
+            ]
+            crit_text, guard_text, weight_text = "Крит. удар", "Усил. блок", "Вес"
+        else:
+            rows = [
+                ("Physical", attack_data.get("physical", 0), defense_data.get("physical", 0), "#cbd5e1"),
+                ("Magic", attack_data.get("magic", 0), defense_data.get("magic", 0), "#5c92ff"),
+                ("Fire", attack_data.get("fire", 0), defense_data.get("fire", 0), "#ff6b4a"),
+                ("Lightning", attack_data.get("lightning", 0), defense_data.get("lightning", 0), "#e6cc45"),
+                ("Holy", attack_data.get("holy", 0), defense_data.get("holy", 0), "#b388ff"),
+            ]
+            crit_text, guard_text, weight_text = "Critical", "Guard Boost", "Weight"
+        
+        for i, (name, atk_val, def_val, color) in enumerate(rows, start=1):
+            self.add_stat_row(stats_layout, i, name, atk_val, def_val, color)
+            
+        self.add_single_stat(stats_layout, 6, 0, crit_text, attack_data.get("crit", 100), "#ff4a4a")
+        self.add_single_stat(stats_layout, 6, 2, guard_text, defense_data.get("guard_boost", 0), "#63d471")
+        self.add_single_stat(stats_layout, 7, 2, weight_text, weight, "#cbd5e1")
+        
+        main_layout.addLayout(stats_layout)
+
+    def render_scaling_block(self, main_layout, scaling, reqs, lang):
+        attr_layout = QGridLayout()
+        attr_layout.setSpacing(4)
+        
+        headers = ["Сил", "Лов", "Муд", "Вер", "Кол"] if lang == "ru" else ["Str", "Dex", "Int", "Fai", "Arc"]
+        keys = ["str", "dex", "int", "fth", "arc"]
+        
+        lbl_scale = QLabel("Бонусы" if lang == "ru" else "Attribute Scaling")
+        lbl_scale.setStyleSheet("color: #e8dcc2; font-weight: bold; font-size: 12px;")
+        lbl_scale.setAlignment(Qt.AlignCenter)
+        attr_layout.addWidget(lbl_scale, 0, 0, 1, 5)
+        
+        for col, (head, key) in enumerate(zip(headers, keys)):
+            h_lbl = QLabel(head)
+            h_lbl.setStyleSheet("color: #888; font-size: 11px;")
+            h_lbl.setAlignment(Qt.AlignCenter)
+            
+            v_lbl = QLabel(str(scaling.get(key, "-")))
+            v_lbl.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+            v_lbl.setAlignment(Qt.AlignCenter)
+            
+            attr_layout.addWidget(h_lbl, 1, col)
+            attr_layout.addWidget(v_lbl, 2, col)
+        
+        lbl_req = QLabel("Требования" if lang == "ru" else "Attributes Required")
+        lbl_req.setStyleSheet("color: #e8dcc2; font-weight: bold; font-size: 12px; margin-top: 8px;")
+        lbl_req.setAlignment(Qt.AlignCenter)
+        attr_layout.addWidget(lbl_req, 3, 0, 1, 5)
+        
+        for col, key in enumerate(keys):
+            val = reqs.get(key, 0)
+            r_lbl = QLabel(str(val) if val > 0 else "-")
+            r_color = "#e8dcc2" if val > 0 else "#555"
+            r_lbl.setStyleSheet(f"color: {r_color}; font-size: 12px;")
+            r_lbl.setAlignment(Qt.AlignCenter)
+            attr_layout.addWidget(r_lbl, 4, col)
+            
+        main_layout.addLayout(attr_layout)
+
+    def add_stat_row(self, layout, row, name, atk_val, def_val, color):
+        self.add_single_stat(layout, row, 0, name, atk_val, color)
+        self.add_single_stat(layout, row, 2, name, def_val, color)
+        
+    def add_single_stat(self, layout, row, col_start, name, val, color):
+        lbl_name = QLabel(name)
+        lbl_name.setStyleSheet(f"color: {color}; font-size: 12px;")
+        
+        lbl_val = QLabel(str(val))
+        lbl_val.setStyleSheet("color: #cbd5e1; font-size: 12px;")
+        lbl_val.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        
+        layout.addWidget(lbl_name, row, col_start)
+        layout.addWidget(lbl_val, row, col_start + 1)
+
+class LootLabel(QLabel):
+    def __init__(self, item_data, parent=None):
+        super().__init__(parent)
+        self.item_data = item_data
+        
+        name = item_data.get("name", "Предмет")
+        self.setText(f"♦ {name}")
+        
+        self.setStyleSheet("""
+            QLabel {
+                color: #e8dcc2; font-size: 13px; padding: 6px;
+                background-color: rgba(40, 40, 40, 150);
+                border: 1px solid #5a5a5a; border-radius: 3px;
+                font-family: 'Georgia', serif;
+            }
+            QLabel:hover { background-color: rgba(70, 70, 70, 200); border-color: #d4a956; color: #d4a956; }
+        """)
+        self.setCursor(Qt.PointingHandCursor)
+        self.tooltip_window = None
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            
+            if not self.tooltip_window:
+                self.tooltip_window = ItemTooltip(self.item_data, parent=self.window())
+            
+            if self.tooltip_window.isVisible():
+                self.tooltip_window.hide()
+            else:
+                self.tooltip_window.adjustSize()
+                
+                main_rect = self.window().geometry()
+                screen_rect = QApplication.desktop().availableGeometry(main_rect.center())
+                
+                w = self.tooltip_window.width()
+                h = self.tooltip_window.height()
+                x = main_rect.right() + 5
+                y = main_rect.top()
+                if x + w > screen_rect.right():
+                    x = main_rect.left() - w - 5
+                if y + h > screen_rect.bottom():
+                    y = screen_rect.bottom() - h - 5
+                    
+                self.tooltip_window.move(x, y)
+                self.tooltip_window.show()
+                
+        super().mousePressEvent(event)
+
+class ItemsScreen(QWidget):
+    def __init__(self, items_data, back_callback, lang="ru"):
+        super().__init__()
+        self.setAttribute(Qt.WA_StyledBackground, True)
+        self.setStyleSheet("""
+            ItemsScreen { background-color: #2b2b2b; }
+            QTreeWidget { background-color: #1a1a1a; color: #c4bca2; border: 1px solid #4a4a4a; font-size: 14px; }
+            QScrollArea { background-color: #2b2b2b; border: none; }
+            QWidget#DetailsContainer { background-color: #2b2b2b; }
+            QLabel { color: #c4bca2; font-family: 'Georgia', serif; }
+            QLineEdit { background-color: #1a1a1a; color: #cbd5e1; border: 1px solid #4a4a4a; border-radius: 4px; padding: 8px; }
+        """)
+        self.items_data = items_data
+        self.lang = lang
+        self.back_callback = back_callback
+        
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(15)
+        
+        # --- ШАПКА ---
+        header_layout = QHBoxLayout()
+        title_text = "БАЗА ПРЕДМЕТОВ" if lang == "ru" else "ITEM DATABASE"
+        title = QLabel(title_text)
+        title.setStyleSheet("color: #d4a956; font-size: 24px; font-weight: bold; font-family: 'Georgia', serif;")
+        
+        btn_back = QPushButton("В главное меню" if lang == "ru" else "Back to Menu")
+        btn_back.setFixedSize(160, 40)
+        btn_back.setCursor(Qt.PointingHandCursor)
+        btn_back.setStyleSheet("""
+            QPushButton { background-color: #2d2d2d; color: #e8dcc2; border: 1px solid #8b7355; border-radius: 4px; font-size: 14px; }
+            QPushButton:hover { background-color: #3d3d3d; border-color: #ffaa00; }
+        """)
+        btn_back.clicked.connect(self.back_callback)
+        
+        header_layout.addWidget(title)
+        header_layout.addStretch()
+        header_layout.addWidget(btn_back)
+        main_layout.addLayout(header_layout)
+        
+        # --- РАЗДЕЛИТЕЛЬ (Слева дерево, справа карточка) ---
+        splitter = QSplitter(Qt.Horizontal)
+        
+        # ЛЕВАЯ ПАНЕЛЬ: Поиск + Дерево
+        left_panel = QWidget()
+        left_layout = QVBoxLayout(left_panel)
+        left_layout.setContentsMargins(0, 0, 0, 0)
+        
+        # Живой поиск
+        self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Поиск предметов..." if lang == "ru" else "Search items...")
+        self.search_bar.setStyleSheet("""
+            QLineEdit { 
+                background-color: #2d2d2d; color: #cbd5e1; 
+                border: 1px solid #4a4a4a; border-radius: 4px; 
+                padding: 8px; font-size: 14px; 
+            }
+            QLineEdit:focus { border-color: #d4a956; }
+        """)
+        self.search_bar.textChanged.connect(self.filter_tree)
+        left_layout.addWidget(self.search_bar)
+        
+        self.tree = QTreeWidget()
+        self.tree.setHeaderHidden(True)
+        self.tree.setStyleSheet("""
+            QTreeWidget { background-color: #1c1c1c; color: #cbd5e1; border: 1px solid #4a4a4a; font-size: 14px; }
+            QTreeWidget::item:hover { background-color: #2a2a2a; }
+            QTreeWidget::item:selected { background-color: #3d3d3d; color: #d4a956; }
+        """)
+        self.tree.itemClicked.connect(self.on_item_clicked)
+        left_layout.addWidget(self.tree)
+        
+        splitter.addWidget(left_panel)
+        
+        # ПРАВАЯ ПАНЕЛЬ: Место под карточку предмета
+        self.details_scroll = QScrollArea()
+        self.details_scroll.setWidgetResizable(True)
+        self.details_scroll.setStyleSheet("QScrollArea { border: none; background-color: transparent; }")
+        
+        self.details_container = QWidget()
+        self.details_container.setObjectName("DetailsContainer")
+        self.details_layout = QVBoxLayout(self.details_container)
+        self.details_layout.setAlignment(Qt.AlignTop)
+        self.details_scroll.setWidget(self.details_container)
+        
+        splitter.addWidget(self.details_scroll)
+        splitter.setSizes([350, 600])
+        main_layout.addWidget(splitter)
+        
+        self.populate_tree()
+
+    def populate_tree(self):
+        categories = {}
+        for item_id, data in self.items_data.items():
+            item_type = data.get(f"type_{self.lang}", data.get("type_ru", data.get("type", "")))
+            weapon_type = data.get(f"weapon_type_{self.lang}", data.get("weapon_type_ru", "-"))
+            if "Талисман" in item_type or "Talisman" in item_type:
+                cat_name = "Талисманы" if self.lang == "ru" else "Talismans"
+                sub_name = ""
+            elif item_type in ["Молитва", "Incantation", "Чары", "Sorcery"]:
+                cat_name = "Магия" if self.lang == "ru" else "Magic"
+                sub_name = item_type
+            elif weapon_type and weapon_type != "-":
+                cat_name = "Оружие" if self.lang == "ru" else "Weapons"
+                sub_name = weapon_type
+            elif "Прах" in item_type or "Ashes" in item_type:
+                cat_name = "Прах" if self.lang == "ru" else "Ashes"
+                sub_name = ""
+            elif "Сет" in item_type or "Броня" in item_type or "Armor" in item_type:
+                cat_name = "Броня" if self.lang == "ru" else "Armor"
+                sub_name = ""
+            else:
+                cat_name = "Предметы" if self.lang == "ru" else "Items"
+                sub_name = item_type if item_type and item_type != "-" else "Разное"
+
+            if cat_name not in categories:
+                categories[cat_name] = {}
+            if sub_name not in categories[cat_name]:
+                categories[cat_name][sub_name] = []
+                
+            categories[cat_name][sub_name].append(data)
+        self.tree.clear()
+        for cat_name, subcategories in categories.items():
+            cat_item = QTreeWidgetItem(self.tree, [cat_name])
+            cat_item.setForeground(0, QColor("#d4a956"))
+            
+            for sub_name, items in subcategories.items():
+                parent_for_items = cat_item
+                
+                if sub_name:
+                    sub_item = QTreeWidgetItem(cat_item, [sub_name])
+                    sub_item.setForeground(0, QColor("#a89f91"))
+                    parent_for_items = sub_item
+                    
+                for item_data in items:
+                    name = item_data.get(f"name_{self.lang}", item_data.get("name_ru", "Unknown"))
+                    leaf_item = QTreeWidgetItem(parent_for_items, [f"♦ {name}"])
+                    leaf_item.setData(0, Qt.UserRole, item_data)
+                    
+        self.tree.expandAll()
+
+    #ПОИСК
+    def filter_tree(self, text):
+        search_text = text.lower()
+        
+        def filter_node(item):
+            match = search_text in item.text(0).lower()
+            child_match = False
+            
+            for i in range(item.childCount()):
+                child = item.child(i)
+                if filter_node(child):
+                    child_match = True
+            if item.childCount() == 0:
+                item.setHidden(not match)
+                return match
+            else:
+                show_folder = match or child_match
+                item.setHidden(not show_folder)
+                if show_folder and search_text: 
+                    item.setExpanded(True)
+                return show_folder
+        for i in range(self.tree.topLevelItemCount()):
+            filter_node(self.tree.topLevelItem(i))
+
+    def on_item_clicked(self, item, column):
+        item_data = item.data(0, Qt.UserRole)
+        if not item_data: return
+            
+        for i in reversed(range(self.details_layout.count())): 
+            widget = self.details_layout.itemAt(i).widget()
+            if widget: widget.setParent(None)
+                
+        display_data = item_data.copy()
+        display_data["lang"] = self.lang
+        display_data["name"] = item_data.get(f"name_{self.lang}", item_data.get("name_ru", ""))
+
+        w_type = item_data.get(f"weapon_type_{self.lang}", "-")
+        display_data["type"] = w_type if w_type != "-" else item_data.get(f"type_{self.lang}", "")
+        
+        display_data["damage_type"] = item_data.get(f"damage_type_{self.lang}", "")
+        display_data["skill_name"] = item_data.get(f"skill_name_{self.lang}", "")
+        display_data["effects"] = item_data.get(f"effects_{self.lang}", item_data.get("effects_ru", ""))
+        
+        card = ItemTooltip(display_data, self)
+        card.setWindowFlags(Qt.Widget) 
+        card.setAttribute(Qt.WA_TransparentForMouseEvents, False)
+        
+        self.details_layout.addWidget(card)

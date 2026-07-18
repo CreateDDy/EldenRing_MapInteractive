@@ -1,0 +1,154 @@
+{
+    "sorcery_greatblade_phalanx": {
+        "name_ru": "Фаланга большого меча",
+        "name_en": "Greatblade Phalanx",
+        "icon": "spell_greatblade_phalanx.png",
+        "type_ru": "Чары",
+        "type_en": "Sorcery",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "Магия",
+        "damage_type_en": "Magic",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 30,
+            "slots": 1,
+            "duration": "-",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 29, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Создает над головой магические мечи, которые атакуют ближайшего врага. Требует 29 ед. Мудрости.",
+        "effects_en": "Creates magical swords above the caster that attack nearby enemies. Requires 29 Intelligence."
+    },
+    "sorcery_meteorite": {
+        "name_ru": "Метеорит",
+        "name_en": "Meteorite",
+        "icon": "spell_meteorite.png",
+        "type_ru": "Чары",
+        "type_en": "Sorcery",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "Магия",
+        "damage_type_en": "Magic",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 30,
+            "slots": 1,
+            "duration": "-",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 30, "fth": 0, "arc": 0
+        },
+        "effects_ru": "Призывает рой метеоритов, падающих с неба. Продолжает действовать, пока нажата кнопка.",
+        "effects_en": "Summons a swarm of meteorites falling from the sky. Continues to cast while button is held."
+    },
+    "ancient_death_rancor": {
+        "name_ru": "Месть древних мертвецов",
+        "name_en": "Ancient Death Rancor",
+        "icon": "ancient_death_rancor.png",
+        "type_ru": "Чары",
+        "type_en": "Sorcery",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "Магия",
+        "damage_type_en": "Magic",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 21,
+            "slots": 1,
+            "duration": "-",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 34, "fth": 24, "arc": 0
+        },
+        "effects_ru": "Призывает древних мертвецов, которые преследуют врагов и взрываются при контакте.",
+        "effects_en": "Summons vengeful spirits of the ancient dead that track enemies and explode."
+    },
+    "explosive_ghostflame": {
+        "name_ru": "Взрывное пламя смерти",
+        "name_en": "Explosive Ghostflame",
+        "icon": "explosive_ghostflame.png",
+        "type_ru": "Чары",
+        "type_en": "Sorcery",
+        "weapon_type_ru": "-",
+        "weapon_type_en": "-",
+        "damage_type_ru": "Магия",
+        "damage_type_en": "Magic",
+        "skill_name_ru": "-",
+        "skill_name_en": "-",
+        "skill_cost": "-",
+        
+        "magic_params": {
+            "fp_cost": 29,
+            "slots": 1,
+            "duration": "-",
+            "price": "-"
+        },
+        
+        "attack": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "crit": 0
+        },
+        "defense": {
+            "physical": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 0, "guard_boost": 0
+        },
+        "weight": 0.0,
+        
+        "scaling": {
+            "str": "-", "dex": "-", "int": "-", "fth": "-", "arc": "-"
+        },
+        "requirements": {
+            "str": 0, "dex": 0, "int": 42, "fth": 30, "arc": 0
+        },
+        "effects_ru": "Пламя смерти взрывается и распространяется на большую площадь",
+        "effects_en": "Explosive Ghostflame explodes and spreads over a large area"
+    }
+}

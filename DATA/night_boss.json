@@ -1,0 +1,222 @@
+{
+    "death_rite_birds": [
+        {
+            "id": 26099,
+            "x": 2146,
+            "y": 4942,
+            "name_ru": "Погребальная птица",
+            "name_en": "Death Rite Bird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ancient_death_rancor"]
+        },
+        {
+            "id": 75233,
+            "x": 5588,
+            "y": 7027,
+            "name_ru": "Погребальная птица",
+            "name_en": "Death Rite Bird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["death_poker"]
+        },
+        {
+            "id": 28218,
+            "x": 5845,
+            "y": 1965,
+            "name_ru": "Погребальная птица",
+            "name_en": "Death Rite Bird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["death_ritual_spear"]
+        },
+        {
+            "id": 81721,
+            "x": 5156,
+            "y": 1801,
+            "name_ru": "Погребальная птица",
+            "name_en": "Death Rite Bird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["explosive_ghostflame"]
+        }
+    ],
+    "death_birds": [
+        {
+            "id": 51511,
+            "x": 3840,
+            "y": 6723,
+            "name_ru": "Ночная птица",
+            "name_en": "Deathbird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["talisman_blue_feathered_branchsword"]
+        },
+        {
+            "id": 7007,
+            "x": 4110,
+            "y": 8337,
+            "name_ru": "Ночная птица",
+            "name_en": "Deathbird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["sacrificial_axe"]
+        },
+        {
+            "id": 64176,
+            "x": 2388,
+            "y": 5647,
+            "name_ru": "Ночная птица",
+            "name_en": "Deathbird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["red_feathered_branchsword"]
+        },
+        {
+            "id": 65910,
+            "x": 4180,
+            "y": 2894,
+            "name_ru": "Ночная птица",
+            "name_en": "Deathbird",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["twinbird_kite"]
+        }
+    ],
+    "night_cavalry": [
+        {
+            "id": 23656,
+            "x": 4062,
+            "y": 7140,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["repeating_thrust"]
+        },
+        {
+            "id": 82514,
+            "x": 4260,
+            "y": 8187,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["barricade_shield",
+                            "nightrider_flail"]
+        },
+        {
+            "id": 73286,
+            "x": 2838,
+            "y": 5533,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ash_of_war_ice_spear"]
+        },
+        {
+            "id": 92655,
+            "x": 2239,
+            "y": 4134,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ash_of_war_giant_hunt",
+                            "weapon_nightrider_glaive"]
+        },
+        {
+            "id": 31050,
+            "x": 5389,
+            "y": 7035,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ash_of_war_poison_moth_flight"]
+        },
+        {
+            "id": 11561,
+            "x": 6277,
+            "y": 5896,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ash_of_war_bloodhound_step"]
+        },
+        {
+            "id": 45628,
+            "x": 3004,
+            "y": 3520,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ash_of_war_shared_order"]
+        },
+        {
+            "id": 5079,
+            "x": 5117,
+            "y": 3424,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["ash_of_war_phantom_slash"]
+        },
+        {
+            "id": 65661,
+            "x": 5314,
+            "y": 2443,
+            "name_ru": "Ночной всадник",
+            "name_en": "Night's Cavalry",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": ["armor_night_cavalry_set"]
+        }
+    ],
+    "BB_hunter": [
+        {
+            "id": 71863,
+            "x": 2408,
+            "y": 4739,
+            "name_ru": "Охотник за сферами",
+            "name_en": "Bell Bearing Hunter",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": []
+        },
+        {
+            "id": 10304,
+            "x": 3682,
+            "y": 6698,
+            "name_ru": "Охотник за сферами",
+            "name_en": "Bell Bearing Hunter",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": []
+        },
+        {
+            "id": 97002,
+            "x": 3945,
+            "y": 2945,
+            "name_ru": "Охотник за сферами",
+            "name_en": "Bell Bearing Hunter",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": []
+        },
+        {
+            "id": 42557,
+            "x": 5166,
+            "y": 6106,
+            "name_ru": "Охотник за сферами",
+            "name_en": "Bell Bearing Hunter",
+            "description_ru": "Появляется только ночью.",
+            "description_en": "Spawns only at night.",
+            "loot_items": []
+        }
+    ]
+}

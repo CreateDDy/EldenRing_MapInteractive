@@ -6,7 +6,7 @@ output_path = os.path.join('core', 'data.dat')
 
 # Создаем папку core, если её вдруг нет
 os.makedirs('core', exist_ok=True)
-
+6
 print("Начинаем сборку стерильного ядра для Nexus...")
 with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
     for file in files_to_pack:
