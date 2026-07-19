@@ -13,10 +13,14 @@ if getattr(sys, 'frozen', False):
 else:
     base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
+def icon_file(*parts):
+    return os.path.join(base_path, "icons", *parts)
+
 class MapMarker(QGraphicsPixmapItem):
     def __init__(self, icon_path, x, y, name, category, map_layer, overlay_path=None, custom_size=None, toggle_callback=None, marker_id=None, initial_completed=False):
         super().__init__()
         self.name_text = name
+        self.name_text_lower = name.lower()
         self.category = category
         self.map_layer = map_layer
         self.has_overlay = bool(overlay_path)
@@ -60,19 +64,16 @@ class MapMarker(QGraphicsPixmapItem):
         self.setAcceptHoverEvents(True)
         self.setFlag(QGraphicsPixmapItem.ItemIgnoresTransformations, True)
 
-        # Click timer
-        self.click_timer = QTimer()
-        self.click_timer.setSingleShot(True)
-        self.click_timer.timeout.connect(self.process_single_click)
         self.last_click_pos = None
+        self._click_gen = 0
 
     def add_info_mark(self):
         if not getattr(self, "note", "") and not getattr(self, "loot", "") and not getattr(self, "loot_data", []):
             return
-        info_path = os.path.join(base_path, "icons", "system_icons", "descr.png")
+        info_path = icon_file("system_icons", "descr.png")
         if not os.path.exists(info_path):
             return
-            
+
         info_pix = QPixmap(info_path).scaled(20, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         offset_x = self.base_pixmap.width() - info_pix.width()
         offset_y = 0
@@ -98,38 +99,61 @@ class MapMarker(QGraphicsPixmapItem):
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.last_click_pos = event.screenPos()
-            self.click_timer.start(200)
+            self._click_gen += 1
+            pending_gen = self._click_gen
+            QTimer.singleShot(200, lambda: self._resolve_single_click(pending_gen))
             self.ungrabMouse()
             event.accept()
             return
         super().mousePressEvent(event)
 
+    def _resolve_single_click(self, pending_gen):
+        if pending_gen == self._click_gen:
+            self.process_single_click()
+
     def process_single_click(self):
         title = getattr(self, "name_text", "Unknown object")
         description = getattr(self, "note", "")
         old_text_loot = getattr(self, "loot", "")
-        loot_data = getattr(self, "loot_data", []) # Достаем наши новые предметы
-        
+        loot_data = getattr(self, "loot_data", [])
+        image_name = getattr(self, "image_name", None)
+        resistances = getattr(self, "resistances", {})
+        phases = getattr(self, "phases", None)
+
         final_text = description
         if old_text_loot:
             final_text += f"\n\nЛут:\n{old_text_loot}"
 
-        if not final_text and not loot_data:
+        if not final_text and not loot_data and not image_name and not resistances and not phases:
             return
 
-        self.info_dialog = MarkerInfoWindow(title, final_text, loot_data)
+        self.info_dialog = MarkerInfoWindow(title, final_text, loot_data, image_name, resistances, phases)
         self.info_dialog.adjustSize()
 
         if self.last_click_pos:
-            x = self.last_click_pos.x() - (self.info_dialog.width() // 2)
-            y = self.last_click_pos.y() - self.info_dialog.height() - 15
+            from PyQt5.QtWidgets import QApplication
+            
+            w = self.info_dialog.width()
+            h = self.info_dialog.height()
+            
+            x = self.last_click_pos.x() + 25 
+            y = self.last_click_pos.y() - (h // 2)
+
+            screen_rect = QApplication.desktop().availableGeometry(self.last_click_pos)
+            if x + w > screen_rect.right() - 10:
+                x = self.last_click_pos.x() - w - 25
+            if y + h > screen_rect.bottom() - 10:
+                y = screen_rect.bottom() - h - 10
+            if y < screen_rect.top() + 10:
+                y = screen_rect.top() + 10
+
             self.info_dialog.move(int(x), int(y))
 
         self.info_dialog.show()
 
     def mouseDoubleClickEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.click_timer.stop()
+            self._click_gen += 1
             self.is_completed = not self.is_completed
 
             if self.has_overlay:
@@ -148,7 +172,8 @@ class RegionMarker(QGraphicsPixmapItem):
     def __init__(self, icon_path, x, y, grace_name, category, map_layer="surface", toggle_callback=None, marker_id=None, initial_completed=False):
         super().__init__()
         self.name_text = grace_name
-        self.category = category 
+        self.name_text_lower = grace_name.lower()
+        self.category = category
         self.map_layer = map_layer 
         self.is_cleared = initial_completed
         self.toggle_callback = toggle_callback
@@ -206,7 +231,7 @@ class WaypointSelector(QDialog):
             btn.setFixedSize(50, 50)
             btn.setCursor(Qt.PointingHandCursor)
             
-            icon_path = os.path.join(base_path, "icons", "waypoint_icons", icon_name)  
+            icon_path = icon_file("waypoint_icons", icon_name)
 
             if os.path.exists(icon_path):
                 btn.setIcon(QIcon(icon_path))
@@ -250,7 +275,7 @@ class UserWaypoint(QGraphicsPixmapItem):
         if not self.note:
             return
             
-        info_path = os.path.join(base_path, "icons", "descr.png")
+        info_path = icon_file("system_icons", "descr.png")
         if not os.path.exists(info_path):
             print(f"Icon not found: {info_path}")
             return
@@ -340,8 +365,8 @@ class InteractiveMapViewer(QGraphicsView):
                 is_checked = current_state.get(item.category, True)
                 is_on_current_map = (item.map_layer == self.current_map_layer)
                 name_match = True
-                if search_text and hasattr(item, "name_text"):
-                    name_match = search_text in item.name_text.lower()
+                if search_text and hasattr(item, "name_text_lower"):
+                    name_match = search_text in item.name_text_lower
                 item.setVisible(is_checked and is_on_current_map and name_match)
             elif isinstance(item, UserWaypoint):
                 item.setVisible(item.map_layer == self.current_map_layer)
@@ -404,7 +429,7 @@ class InteractiveMapViewer(QGraphicsView):
             selector.move(global_pos)
             
             if selector.exec_() == QDialog.Accepted and selector.selected_icon:
-                icon_path = os.path.join(base_path, "icons", "waypoint_icons", selector.selected_icon)                
+                icon_path = icon_file("waypoint_icons", selector.selected_icon)
                 current_layer = self.current_map_layer
                 marker_id = f"wp_{int(x)}_{int(y)}"
                 label_text = "Marker text (optional):" if self.lang == "en" else "Текст метки (необязательно):"
@@ -430,7 +455,6 @@ class InteractiveMapViewer(QGraphicsView):
     def focusOutEvent(self, event):
         self.is_panning = False
         super().focusOutEvent(event)
-    
 
     def remove_waypoint(self, waypoint_item):
         if waypoint_item in self.scene.items():
@@ -487,7 +511,7 @@ class InteractiveMapViewer(QGraphicsView):
                 with open(file_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                     for wp in data:
-                        icon_path = os.path.join(base_path, "icons", "waypoint_icons", wp["icon"])
+                        icon_path = icon_file("waypoint_icons", wp["icon"])
                         marker_id = f"wp_{int(wp['x'])}_{int(wp['y'])}"
                         note = wp.get("note", "")
                         waypoint = UserWaypoint(icon_path, wp["x"], wp["y"], wp["layer"], self.remove_waypoint, marker_id, note)

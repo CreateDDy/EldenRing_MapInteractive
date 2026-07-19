@@ -1,118 +1,17 @@
 import sys
 import os
-import requests
 import json
 from components import MapMarker, RegionMarker, InteractiveMapViewer as InteractiveMapViewer
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QStackedWidget)
 from PyQt5.QtGui import QPixmap, QCursor
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QTimer
 from interface import MainMenu, MapScreen, ItemsScreen
-from config import APP_VERSION, REGISTRY, DATA_MANIFEST, MAP_LAYERS, GAME_TITLE
+from config import REGISTRY, DATA_MANIFEST, MAP_LAYERS, GAME_TITLE, get_img, sanitize_profile_name
 
 if getattr(sys, 'frozen', False):
     base_path = os.path.dirname(sys.executable)
 else:
     base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-
-def get_local_db_version():
-    try:
-        with open(os.path.join(base_path, "version.json"), "r", encoding="utf-8") as f:
-            return json.load(f).get("db_version", APP_VERSION)
-    except Exception:
-        return APP_VERSION
-
-class UpdateThread(QThread):
-    status_signal = pyqtSignal(str)
-    finished_signal = pyqtSignal(bool)
-
-    def __init__(self, current_version):
-        super().__init__()
-        self.current_version = str(current_version)
-
-    def run(self):
-        try:
-            self.status_signal.emit("Checking for database updates...")
-            
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-
-            def fetch_with_retry(url, max_retries=3):
-                import time
-                last_error = None
-                session = requests.Session()
-                session.trust_env = False 
-                
-                for attempt in range(max_retries):
-                    try:
-                        r = session.get(url, headers=headers, timeout=(10, 30))
-                        if r.status_code == 200:
-                            return r
-                        else:
-                            last_error = Exception(f"HTTP Status: {r.status_code}")
-                    except Exception as e:
-                        last_error = e
-                    
-                    time.sleep(1)
-                raise last_error
-            
-            base_urls = [
-                "https://raw.kkgithub.com/CreateDDy/EldenRing_MapInteractive/main",
-                "https://ghproxy.net/https://raw.githubusercontent.com/CreateDDy/EldenRing_MapInteractive/main",
-                "https://raw.githubusercontent.com/CreateDDy/EldenRing_MapInteractive/main"
-            ]
-
-            resp = None
-            active_base_url = None
-            last_network_error = None
-
-            for url in base_urls:
-                try:
-                    resp = fetch_with_retry(f"{url}/version.json", max_retries=2)
-                    active_base_url = url
-                    break  
-                except Exception as e:
-                    last_network_error = e
-                    continue
-
-            if not resp:
-                raise Exception(f"Все серверы обновлений недоступны. Последний сбой: {last_network_error}")
-            
-            data = resp.json()
-            remote_version = data.get("db_version", "1.2.2")
-
-            def parse_v(v_str):
-                try:
-                    return tuple(map(int, str(v_str).split('.')))
-                except ValueError:
-                    return (0, 0, 0)
-                
-            if parse_v(remote_version) > parse_v(self.current_version):
-                self.status_signal.emit("Loading new data...")
-                files_to_download = data.get("files", [])
-                
-                for file_path in files_to_download:
-                    safe_path = file_path.replace("/", os.sep)
-                    absolute_safe_path = os.path.join(base_path, safe_path)
-                    
-                    file_resp = fetch_with_retry(f"{active_base_url}/{file_path}")
-                    
-                    os.makedirs(os.path.dirname(absolute_safe_path), exist_ok=True)
-                    with open(absolute_safe_path, 'wb') as f:
-                        f.write(file_resp.content)
-                
-                local_version_path = os.path.join(base_path, "version.json")
-                with open(local_version_path, "w", encoding="utf-8") as f:
-                    json.dump(data, f, indent=4, ensure_ascii=False)
-                            
-                self.finished_signal.emit(True)
-            else:
-                self.status_signal.emit("The databases are up to date.")
-                self.finished_signal.emit(False)
-                
-        except Exception as e:
-            error_text = str(e) if str(e) else type(e).__name__
-            self.status_signal.emit(f"Сбой: {error_text}")
-            print(f"Update failed: {error_text}") 
-            self.finished_signal.emit(False)
 
 
 class MainWindow(QMainWindow):
@@ -122,184 +21,289 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 1200, 800)
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
-        self.current_db_version = get_local_db_version()
+
         self.items_vault = self.load_items_database()
 
+        self.map_screen = None
+        self.items_screen = None
+        self.viewer = None
+        self.data_vault = {}
+        self.current_loaded_lang = None
+        self.current_loaded_profile = None
+
         menu_bg_path = os.path.join(base_path, "icons", "system_icons", "menu_bg.jpg")
-        self.menu_screen = MainMenu(self.launch_map, menu_bg_path, self.current_db_version)
+        self.menu_screen = MainMenu(self.launch_map, menu_bg_path)
         self.menu_screen.switch_to_items_callback = self.launch_items
         self.stack.addWidget(self.menu_screen)
-        self.map_screen = None 
-        
+
+        self.custom_cursor = self._load_custom_cursor()
+        if self.custom_cursor:
+            self.setCursor(self.custom_cursor)
+
+        self.menu_screen.loading_overlay.resize(1200, 800)
+        self.menu_screen.loading_overlay.show()
+        QTimer.singleShot(500, self.execute_preload)
+
+    def _load_custom_cursor(self):
         cursor_path = os.path.join(base_path, "icons", "system_icons", "cursor.png")
         cursor_img = QPixmap(cursor_path)
-        if not cursor_img.isNull():
-            scaled_cursor = cursor_img.scaled(48, 36, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            self.custom_cursor = QCursor(scaled_cursor, 0, 0)
-            self.setCursor(self.custom_cursor)
-        else:
-            self.custom_cursor = None
+        if cursor_img.isNull():
+            return None
+        scaled_cursor = cursor_img.scaled(48, 36, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        return QCursor(scaled_cursor, 0, 0)
 
-        self.updater = UpdateThread(self.current_db_version)
-        self.updater.status_signal.connect(self.update_status_bar)
-        self.updater.finished_signal.connect(self.on_update_finished)
-        self.updater.start()
+    def _current_safe_profile(self):
+        profile = self.menu_screen.profile_combo.currentText()
+        if not profile:
+            profile = self.menu_screen.base_profile
+        return sanitize_profile_name(profile)
 
-    def launch_map(self, lang, profile_name="default"):
-        
-        if self.map_screen:
+    def execute_preload(self):
+        safe_profile = self._current_safe_profile()
+        self.launch_map(self.menu_screen.current_lang, safe_profile, switch_to_it=False)
+        self.menu_screen.loading_overlay.hide()
+
+    # ------------------------------------------------------------------
+    # Map loading
+    # ------------------------------------------------------------------
+
+    def launch_map(self, lang, profile_name="default", switch_to_it=True):
+        already_loaded = (
+            self.map_screen is not None
+            and self.current_loaded_lang == lang
+            and self.current_loaded_profile == profile_name
+        )
+        if already_loaded:
+            if switch_to_it:
+                self.stack.setCurrentWidget(self.map_screen)
+            return
+
+        if self.map_screen is not None:
             self.stack.removeWidget(self.map_screen)
             self.map_screen.deleteLater()
-        self.data_vault = {}
-        for key, base_name in DATA_MANIFEST.items():
-            unified_path = os.path.join(base_path, "DATA", f"{base_name}.json")
-            if os.path.exists(unified_path):
-                self.data_vault[key] = self.load_json(unified_path)
-            else:
-                legacy_path = os.path.join(base_path, "DATA", f"{base_name}_{lang}.json")
-                self.data_vault[key] = self.load_json(legacy_path)
 
-        first_layer_key = list(MAP_LAYERS.keys())[0]
-        first_layer_meta = MAP_LAYERS[first_layer_key]
-        start_map_path = first_layer_meta["file"]
-        
-        self.viewer = InteractiveMapViewer(start_map_path, first_layer_meta["zoom"], default_layer="surface", lang=lang)
-        self.viewer.profile_name = profile_name
-        self.viewer.load_waypoints()
+        self.current_loaded_lang = lang
+        self.current_loaded_profile = profile_name
 
-        if self.custom_cursor:
-            self.viewer.viewport().setCursor(self.custom_cursor)
-
+        self.data_vault = self._load_data_vault(lang)
+        self.viewer = self._create_viewer(lang, profile_name)
         self.map_screen = MapScreen(self.viewer, lambda: self.stack.setCurrentIndex(0), lang, profile_name)
         self.stack.addWidget(self.map_screen)
-        
+
+        self._connect_layer_buttons()
+        self._populate_markers(lang)
+
+        self.map_screen.update_filters()
+        if switch_to_it:
+            self.stack.setCurrentWidget(self.map_screen)
+
+    def _load_data_vault(self, lang):
+        data_vault = {}
+        data_dir = os.path.join(base_path, "DATA")
+        all_jsons = {}
+        if os.path.exists(data_dir):
+            for root, dirs, files in os.walk(data_dir):
+                if "items" in dirs:
+                    dirs.remove("items")
+                for file in files:
+                    if file.endswith(".json"):
+                        all_jsons[file[:-5]] = os.path.join(root, file)
+
+        for key, base_name in DATA_MANIFEST.items():
+            if base_name in all_jsons:
+                data_vault[key] = self.load_json(all_jsons[base_name])
+            elif f"{base_name}_{lang}" in all_jsons:
+                data_vault[key] = self.load_json(all_jsons[f"{base_name}_{lang}"])
+            else:
+                data_vault[key] = {}
+                print(f"[DEBUG] Файл {base_name}.json не найден ни в одной папке!")
+        return data_vault
+
+    def _create_viewer(self, lang, profile_name):
+        first_layer_key = list(MAP_LAYERS.keys())[0]
+        first_layer_meta = MAP_LAYERS[first_layer_key]
+
+        viewer = InteractiveMapViewer(first_layer_meta["file"], first_layer_meta["zoom"], default_layer="surface", lang=lang)
+        viewer.profile_name = profile_name
+        viewer.load_waypoints()
+
+        if self.custom_cursor:
+            viewer.viewport().setCursor(self.custom_cursor)
+        return viewer
+
+    def _connect_layer_buttons(self):
         for layer_id, meta in MAP_LAYERS.items():
             path = meta["file"]
             btn = getattr(self.map_screen, f"btn_{layer_id}", None)
             if btn:
                 btn.clicked.connect(lambda checked=False, p=path, z=meta["zoom"], l=layer_id: self.switch_map_layer(p, z, l))
 
+    def _populate_markers(self, lang):
         for item_id, meta in REGISTRY.items():
-            icon_path = os.path.join(base_path, "icons", "markers", meta["icon"])
-            overlay_file = meta.get("overlay")
-            overlay_path = os.path.join(base_path, "icons", "markers", overlay_file) if overlay_file else None
-            
-            custom_size = meta.get("icon_size")
-            source_key = meta.get("source")
-            data = self.data_vault.get(source_key, {})
-            
-            is_regional = meta.get("is_regional", False)
-            use_grace = (meta.get("marker_type") == "grace")
-            
-            keys_to_process = meta.get("json_keys") or [None]
-            
-            for json_key in keys_to_process:
-                target_data = data.get(json_key, []) if json_key else data
-                points = [] 
-                if is_regional and isinstance(target_data, dict):
-                    if json_key:
-                        for region_name, region_list in target_data.items():
+            self._add_markers_for_item(item_id, meta, lang)
+
+    def _add_markers_for_item(self, item_id, meta, lang):
+        icon_path = get_img(meta["icon"])
+        overlay_file = meta.get("overlay")
+        overlay_path = get_img(overlay_file) if overlay_file else None
+        custom_size = meta.get("icon_size")
+        source_key = meta.get("source")
+        data = self.data_vault.get(source_key, {})
+
+        is_regional = meta.get("is_regional", False)
+        use_grace = (meta.get("marker_type") == "grace")
+        keys_to_process = meta.get("json_keys") or [None]
+
+        for json_key in keys_to_process:
+            target_data = data.get(json_key, []) if json_key else data
+            points = self._collect_points(target_data, is_regional, json_key)
+
+            if points and item_id in self.map_screen.progress:
+                self.map_screen.add_category_total(item_id, len(points))
+
+            for pt in points:
+                self._add_marker(item_id, meta, pt, lang, icon_path, overlay_path, custom_size, use_grace)
+
+            if points and item_id in self.map_screen.progress:
+                self.map_screen._update_checkbox_text(item_id)
+
+    def _collect_points(self, target_data, is_regional, json_key):
+        points = []
+        if is_regional and isinstance(target_data, dict):
+            if json_key:
+                for _, region_list in target_data.items():
+                    if isinstance(region_list, list):
+                        for pt in region_list:
+                            if "map_layer" not in pt:
+                                pt["map_layer"] = json_key
+                            points.append(pt)
+            else:
+                for layer_id, regions_dict in target_data.items():
+                    if isinstance(regions_dict, dict):
+                        for _, region_list in regions_dict.items():
                             if isinstance(region_list, list):
                                 for pt in region_list:
                                     if "map_layer" not in pt:
-                                        pt["map_layer"] = json_key
+                                        pt["map_layer"] = layer_id
                                     points.append(pt)
-                    else:
-                        for layer_id, regions_dict in target_data.items():
-                            if isinstance(regions_dict, dict):
-                                for region_name, region_list in regions_dict.items():
-                                    if isinstance(region_list, list):
-                                        for pt in region_list:
-                                            if "map_layer" not in pt:
-                                                pt["map_layer"] = layer_id
-                                            points.append(pt)
-                                            
-                elif isinstance(target_data, list):
-                    points.extend(target_data)
-                    
-                elif isinstance(target_data, dict):
-                    for cat_name, pt_list in target_data.items():
-                        if isinstance(pt_list, list):
-                            points.extend(pt_list)
-                
-                if points and item_id in self.map_screen.progress:
-                    self.map_screen.add_category_total(item_id, len(points))
-                
-                for pt in points:
-                    fallback_label = meta.get(f"label_{lang}", meta.get("label_ru", "Unknown"))
-                    name = pt.get(f"name_{lang}", pt.get("title", pt.get("name", fallback_label)))
-                    layer = pt.get("map_layer", "surface") 
-                    
-                    marker_id = str(pt.get("id", f"{item_id}_{int(pt.get('x', 0))}_{int(pt.get('y', 0))}"))
-                    initial_completed = marker_id in self.map_screen.save_data
-                    
-                    if initial_completed and item_id in self.map_screen.progress:
-                        self.map_screen.progress[item_id]["current"] += 1
-                    
-                    if use_grace:
-                        marker = RegionMarker(icon_path, pt.get("x", 0), pt.get("y", 0), name, item_id, layer, self.map_screen.on_marker_toggled, marker_id, initial_completed)
-                    else:
-                        marker = MapMarker(icon_path, pt.get("x", 0), pt.get("y", 0), name, item_id, layer, overlay_path, custom_size, self.map_screen.on_marker_toggled, marker_id, initial_completed)
-                        marker.note = pt.get(f"description_{lang}", pt.get("description", ""))
-                        marker.loot = pt.get(f"loot_{lang}", pt.get("loot", ""))
-                        loot_ids = pt.get("loot_items", [])
-                        loot_data_list = []
-                        
-                        for loot_id in loot_ids:
-                            if loot_id in self.items_vault:
-                                db_item = self.items_vault[loot_id]
-                                resolved_item = db_item.copy()
-                                resolved_item["name"] = db_item.get(f"name_{lang}", db_item.get("name_ru", "Предмет"))
-                                w_type = db_item.get(f"weapon_type_{lang}", "-")
-                                resolved_item["type"] = w_type if w_type != "-" else db_item.get(f"type_{lang}", "")
-                                
-                                resolved_item["damage_type"] = db_item.get(f"damage_type_{lang}", db_item.get("damage_type_ru", ""))
-                                resolved_item["skill_name"] = db_item.get(f"skill_name_{lang}", db_item.get("skill_name_ru", ""))
-                                resolved_item["effects"] = db_item.get(f"effects_{lang}", db_item.get("effects_ru", db_item.get(f"stats_{lang}", db_item.get("stats_ru", ""))))
-                                resolved_item["lang"] = lang 
-                                resolved_item["icon"] = db_item.get("icon", "default.png")
-                                
-                                loot_data_list.append(resolved_item)
-                                
-                        marker.loot_data = loot_data_list
-                        marker.add_info_mark()
-                    
-                    self.viewer.scene.addItem(marker)
-                
-                if points and item_id in self.map_screen.progress:
-                    self.map_screen._update_checkbox_text(item_id)
-        
-        self.map_screen.update_filters()
-        self.stack.setCurrentWidget(self.map_screen)
+        elif isinstance(target_data, list):
+            if json_key in MAP_LAYERS:
+                for pt in target_data:
+                    if "map_layer" not in pt:
+                        pt["map_layer"] = json_key
+            points.extend(target_data)
+        elif isinstance(target_data, dict):
+            # Идем по ключам (layer_id) и значениям (pt_list)
+            for layer_id, pt_list in target_data.items():
+                if isinstance(pt_list, list):
+                    for pt in pt_list:
+                        # Насильно прописываем слой, если его нет в самом маркере
+                        if "map_layer" not in pt:
+                            pt["map_layer"] = layer_id
+                    points.extend(pt_list)
+        return points
+
+    def _add_marker(self, item_id, meta, pt, lang, icon_path, overlay_path, custom_size, use_grace):
+        fallback_label = meta.get(f"label_{lang}", meta.get("label_ru", "Unknown"))
+        name = pt.get(f"name_{lang}", pt.get("title", pt.get("name", fallback_label)))
+        layer = pt.get("map_layer", "surface")
+
+        marker_id = str(pt.get("id", f"{item_id}_{int(pt.get('x', 0))}_{int(pt.get('y', 0))}"))
+        initial_completed = marker_id in self.map_screen.save_data
+
+        if initial_completed and item_id in self.map_screen.progress:
+            self.map_screen.progress[item_id]["current"] += 1
+
+        if use_grace:
+            marker = RegionMarker(icon_path, pt.get("x", 0), pt.get("y", 0), name, item_id, layer,
+                                   self.map_screen.on_marker_toggled, marker_id, initial_completed)
+        else:
+            marker = MapMarker(icon_path, pt.get("x", 0), pt.get("y", 0), name, item_id, layer,
+                                overlay_path, custom_size, self.map_screen.on_marker_toggled, marker_id, initial_completed)
+            marker.note = pt.get(f"description_{lang}", pt.get("description", ""))
+            marker.loot = pt.get(f"loot_{lang}", pt.get("loot", ""))
+            marker.image_name = pt.get("image")
+            marker.resistances = pt.get("resistances", {})
+            marker.phases = pt.get("phases")
+            loot_ids = pt.get("loot_items", [])
+            marker.loot_data = self._resolve_loot_data(loot_ids, lang)
+            marker.loot_ids_list = loot_ids
+            marker.add_info_mark()
+
+        self.viewer.scene.addItem(marker)
+
+    def _resolve_loot_data(self, loot_ids, lang):
+        loot_data_list = []
+        for loot_item in loot_ids:
+            if isinstance(loot_item, dict):
+                raw_text = loot_item.get(lang, loot_item.get("ru", "Предмет"))
+                loot_data_list.append({"name": raw_text, "lang": lang, "is_raw": True})
+            elif loot_item in self.items_vault:
+                loot_data_list.append(self._resolve_item(loot_item, lang))
+            else:
+                loot_data_list.append({"name": str(loot_item), "lang": lang, "is_raw": True})
+        return loot_data_list
+
+    def _resolve_item(self, loot_item, lang):
+        db_item = self.items_vault[loot_item]
+        resolved_item = db_item.copy()
+        resolved_item["name"] = db_item.get(f"name_{lang}", db_item.get("name_ru", "Предмет"))
+
+        w_type = db_item.get(f"weapon_type_{lang}", "-")
+        resolved_item["type"] = w_type if w_type != "-" else db_item.get(f"type_{lang}", "")
+
+        resolved_item["damage_type"] = db_item.get(f"damage_type_{lang}", db_item.get("damage_type_ru", ""))
+        resolved_item["skill_name"] = db_item.get(f"skill_name_{lang}", db_item.get("skill_name_ru", ""))
+
+        # Умный сбор эффектов (ищет и effects, и effect)
+        resolved_item["effects"] = db_item.get(
+            f"effects_{lang}",
+            db_item.get("effects_ru",
+                db_item.get(f"effect_{lang}",
+                    db_item.get("effect_ru",
+                        db_item.get(f"stats_{lang}", db_item.get("stats_ru", ""))
+                    )
+                )
+            )
+        )
+
+        # Достаем лорное описание
+        resolved_item["description"] = db_item.get(f"description_{lang}", db_item.get("description_ru", ""))
+
+        resolved_item["lang"] = lang
+        resolved_item["icon"] = db_item.get("icon", "default.png")
+        return resolved_item
+
+    # ------------------------------------------------------------------
+    # Items screen
+    # ------------------------------------------------------------------
 
     def launch_items(self, lang):
-        if hasattr(self, 'items_screen') and self.items_screen:
+        if self.items_screen is not None:
             self.stack.removeWidget(self.items_screen)
             self.items_screen.deleteLater()
         self.items_screen = ItemsScreen(self.items_vault, lambda: self.stack.setCurrentIndex(0), lang)
-        
+        self.items_screen.jump_callback = self.find_and_jump_to_marker
         self.stack.addWidget(self.items_screen)
         self.stack.setCurrentWidget(self.items_screen)
-            
+
     def load_items_database(self):
-        items_db = {}
-        items_dir = os.path.join(base_path, "DATA", "items")
-        if not os.path.exists(items_dir):
-            os.makedirs(items_dir)
-            return items_db
-    
-        for filename in os.listdir(items_dir):
-            if filename.endswith(".json"):
-                filepath = os.path.join(items_dir, filename)
-                try:
-                    with open(filepath, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                        items_db.update(data)
-                except Exception as e:
-                    print(f"Ошибка чтения базы предметов {filename}: {e}")
-                    
-        return items_db
-    
+        items_vault = {}
+        data_dir = os.path.join(base_path, "DATA")
+
+        for root, _, files in os.walk(data_dir):
+            for file in files:
+                if file.endswith(".json"):
+                    file_path = os.path.join(root, file)
+                    try:
+                        with open(file_path, "r", encoding="utf-8") as f:
+                            data = json.load(f)
+                            items_vault.update(data)
+                    except (OSError, json.JSONDecodeError) as e:
+                        print(f"Ошибка чтения {file_path}: {e}")
+
+        return items_vault
+
     def load_json(self, path):
         try:
             with open(path, "r", encoding="utf-8") as file:
@@ -311,25 +315,40 @@ class MainWindow(QMainWindow):
     def switch_map_layer(self, path, zoom, layer):
         self.viewer.change_map(path, zoom, layer)
         self.map_screen.update_filters()
-    
 
-    def update_status_bar(self, message):
-        self.statusBar().showMessage(message, 5000)
+    def find_and_jump_to_marker(self, target_item_id):
+        safe_profile = self._current_safe_profile()
+        self.launch_map(self.menu_screen.current_lang, safe_profile, switch_to_it=True)
 
-    def on_update_finished(self, updated):
-        if updated:
-            self.statusBar().showMessage("Update complete", 5000)
-            new_v = get_local_db_version()
-            self.current_db_version = new_v
-            self.menu_screen.version_label.setText(f"v{new_v}")
-        
+        target_marker = None
+        if self.viewer is not None and self.viewer.scene:
+            for item in self.viewer.scene.items():
+                if hasattr(item, 'loot_ids_list') and target_item_id in item.loot_ids_list:
+                    target_marker = item
+                    break
+
+        if target_marker:
+            marker_layer = getattr(target_marker, 'layer', getattr(target_marker, 'map_layer', 'surface'))
+            self.viewer.setUpdatesEnabled(False)
+            if marker_layer == "dlc":
+                self.map_screen.btn_dlc.click()
+            elif marker_layer == "underground":
+                self.map_screen.btn_underground.click()
+            else:
+                self.map_screen.btn_surface.click()
+            self.map_screen.btn_hide_all.click()
+            target_marker.setVisible(True)
+            self.viewer.centerOn(target_marker.pos())
+            self.viewer.setUpdatesEnabled(True)
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     style_path = os.path.join(base_path, "style.qss")
     if os.path.exists(style_path):
         with open(style_path, "r", encoding="utf-8") as f:
             app.setStyleSheet(f.read())
-    
+
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())

@@ -1,0 +1,93 @@
+{
+  "godrick_great_rune": {
+    "name_ru": "Великая руна Годрика",
+    "name_en": "Godrick's Great Rune",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "godrick_rune.png",
+    "description_ru": "Великая руна, дарованная Годрику Сторукому...",
+    "description_en": "A Great Rune of the shardbearer Godrick...",
+    "effect_ru": "Повышает все характеристики на 5.",
+    "effect_en": "Raises all attributes by 5."
+  },
+  "rennala_great_rune": {
+    "name_ru": "Великая руна Нерождённых",
+    "name_en": "Great Rune of the Unborn",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "rennala_rune.png",
+    "description_ru": "Великая руна, дарованная Ренналой, Полнолунной королевой...",
+    "description_en": "A Great Rune of the shardbearer Rennala...",
+    "effect_ru": "Уже активирована. Позволяет обратиться к Реннале за перерождением — сбросом и перераспределением характеристик.",
+    "effect_en": "Already active. Allows Rennala to grant Rebirth — a full stat respec."
+  },
+  "radahn_great_rune": {
+    "name_ru": "Великая руна Радана",
+    "name_en": "Radahn's Great Rune",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "radahn_rune.png",
+    "description_ru": "Великая руна, дарованная Раданом, Бичом Звёзд...",
+    "description_en": "A Great Rune of the shardbearer Radahn...",
+    "effect_ru": "Повышает максимальные ОЗ, ОК и выносливость на 15%.",
+    "effect_en": "Raises maximum HP, FP, and Stamina by 15%."
+  },
+  "morgott_great_rune": {
+    "name_ru": "Великая руна Морготта",
+    "name_en": "Morgott's Great Rune",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "morgott_rune.png",
+    "description_ru": "Великая руна, дарованная Морготтом, королём Знамений...",
+    "description_en": "A Great Rune of the shardbearer Morgott...",
+    "effect_ru": "Значительно повышает максимальные ОЗ.",
+    "effect_en": "Greatly raises maximum HP."
+  },
+  "rykard_great_rune": {
+    "name_ru": "Великая руна Рикарда",
+    "name_en": "Rykard's Great Rune",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "rykard_rune.png",
+    "description_ru": "Великая руна, дарованная Рикардом, богохульным владыкой...",
+    "description_en": "A Great Rune of the shardbearer Rykard...",
+    "effect_ru": "Восстанавливает ОЗ при нанесении урона врагам.",
+    "effect_en": "Restores HP upon attacking enemies."
+  },
+  "mohg_great_rune": {
+    "name_ru": "Великая руна Мога",
+    "name_en": "Mohg's Great Rune",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "mohg_rune.png",
+    "description_ru": "Великая руна, дарованная Могом, повелителем крови...",
+    "description_en": "A Great Rune of the shardbearer Mohg...",
+    "effect_ru": "Дарует благословение крови призванным фантомам, а при успешном вторжении — фантомную великую руну.",
+    "effect_en": "Grants a blessing of blood to summoned phantoms and a Phantom Great Rune upon a successful invasion."
+  },
+  "malenia_great_rune": {
+    "name_ru": "Великая руна Малении",
+    "name_en": "Malenia's Great Rune",
+    "type_ru": "Ключевые предметы",
+    "type_en": "Key Items",
+    "weapon_type_ru": "Великие руны",
+    "weapon_type_en": "Great Runes",
+    "icon": "malenia_rune.png",
+    "description_ru": "Великая руна, дарованная Маленией, клинком Микеллы...",
+    "description_en": "A Great Rune of the shardbearer Malenia...",
+    "effect_ru": "Снижает силу исцеления флягой багряных слёз, но удары, нанесённые сразу после получения урона, частично восстанавливают ОЗ.",
+    "effect_en": "Reduces the healing power of the Flask of Crimson Tears, but attacks made immediately after taking damage partially restore HP."
+  }
+}

@@ -8,7 +8,11 @@ else:
 
 GAME_TITLE = "ELDEN RING MAP"
 
-APP_VERSION = "1.2.6"
+APP_VERSION = "1.2.7"
+
+
+def sanitize_profile_name(name):
+    return "".join(c for c in name if c.isalnum() or c in ('_', '-'))
 
 #Структура меню (Сайдбар)
 # Ключи категорий и элементов должны строго совпадать с LOCALES и REGISTRY
@@ -23,6 +27,9 @@ CATEGORIES_BASE = {
     "cat_merchants": {
         "nomadic_merchant": "Торговцы"
     },
+    "cat_bosses": {
+        "story_bosses": "Сюжетные боссы"
+    },
     "cat_enemies": {
         "bird": "Птицы",
         "cavalry": "Всадники",
@@ -31,7 +38,8 @@ CATEGORIES_BASE = {
     "cat_upgrades": {
         "golden_seed": "Золотое семечко",
         "sacred_tear": "Священная слеза"
-    },
+    }
+    
 }
 
 CATEGORIES_DLC = {
@@ -41,15 +49,18 @@ CATEGORIES_DLC = {
         "mausoleum_coffin_dlc": "Саркофаг воспоминаний"
         
     },
+    "cat_bosses": {
+        "story_bosses_dlc": "Сюжетные боссы"
+    },
     "cat_upgrades_dlc": {
         "scadutree_dlc": "Осколки Древа Упадка",
         "rspirit_ash_dlc": "Прах славного духа"
     }
 }
-
 #Манифест файлов (Базовые имена без расширений и языковых суффиксов)
 DATA_MANIFEST = {
     "boss_data": "night_boss",
+    "story_bosses_data": "story_bosses",
     "grace_data": "graces",
     "evergaols_data": "evergaols",
     "merchant_data": "merchant",
@@ -61,7 +72,6 @@ DATA_MANIFEST = {
     "mausoleum_data": "mausoleum",
     "mausoleum_coffin_data": "mausoleum_coffin"
 }
-
 #Слои карты (Файлы подложек и стартовый масштаб с правильными путями)
 MAP_LAYERS = {
     "surface":     {"file": os.path.join(base_path, "maps", "map_surface.jpg"),     "zoom": 0.2},
@@ -157,7 +167,15 @@ REGISTRY = {
         "json_keys": ["surface"],
         "is_regional": True,
         "icon_size": 50
-
+    },
+    "story_bosses": {
+        "label_ru": "Сюжетные боссы",
+        "label_en": "Story bosses",
+        "icon": "story_bosses.png",
+        "source": "story_bosses_data",
+        "json_keys": ["surface","underground"],
+        "is_regional": False,
+        "icon_size": 60
     },
     
     # --- DLC РЕГИОН ---
@@ -200,7 +218,16 @@ REGISTRY = {
         "json_keys": ["dlc"],
         "is_regional": True,
         "icon_size": 40
-    }
+    },
+    "story_bosses_dlc": {
+        "label_ru": "Сюжетные боссы",
+        "label_en": "Story bosses",
+        "icon": "story_bosses.png",
+        "source": "story_bosses_data",
+        "json_keys": ["dlc"],
+        "is_regional": False,
+        "icon_size": 60
+    },
     
     
 }
@@ -216,9 +243,10 @@ LOCALES = {
         "btn_underground": "Подземная карта",
         "btn_dlc": "Realm of Shadow",
         
-        "cat_locations": "ЛОКАЦИИ",
-        "cat_merchants": "ТОРГОВЦЫ",
-        "cat_enemies": "НОЧНЫЕ БОССЫ",
+        "cat_locations": "Локации",
+        "cat_merchants": "Торговцы",
+        "cat_bosses": "Боссы",
+        "cat_enemies": "Ночные боссы",
         "cat_upgrades": "Улучшение фляг",
         "cat_upgrades_dlc": "Улучшения",
         
@@ -233,6 +261,7 @@ LOCALES = {
         "lbl_sacred_tear": "Священная слеза",
         "lbl_mausoleum": "Блуждающий мавзолей",
         "lbl_evergaols": "Узилища",
+        "lbl_story_bosses": "Сюжетные боссы",
         
         "lbl_grace_dlc": "Благодати",
         "lbl_dungeon_dlc": "Подземелья",
@@ -251,6 +280,7 @@ LOCALES = {
         
         "cat_locations": "LOCATIONS",
         "cat_merchants": "MERCHANTS",
+        "cat_bosses": "Bosses",
         "cat_enemies": "NIGHT BOSSES",
         "cat_upgrades": "Flask upgrade",
         "cat_upgrades_dlc": "Upgrades",
@@ -266,6 +296,7 @@ LOCALES = {
         "lbl_sacred_tear": "Sacred Tear",
         "lbl_mausoleum": "Walking mausoleum",
         "lbl_evergaols": "Evergaols",
+        "lbl_story_bosses": "Story bosses",
         
         "lbl_grace_dlc": "Graces",
         "lbl_dungeon_dlc": "Dungeons",
@@ -274,3 +305,17 @@ LOCALES = {
         "lbl_mausoleum_coffin_dlc": "Remembrance Coffin"
     }
 }
+# Глобальный кэш всех картинок
+IMAGE_CACHE = {}
+
+def get_img(filename):
+    if not filename: 
+        return ""
+    if not IMAGE_CACHE:
+        icons_dir = os.path.join(base_path, "icons")
+        if os.path.exists(icons_dir):
+            for root, _, files in os.walk(icons_dir):
+                for f in files:
+                    IMAGE_CACHE[f] = os.path.join(root, f)
+                    
+    return IMAGE_CACHE.get(filename, "")
