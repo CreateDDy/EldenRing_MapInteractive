@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python -c ' *)",
-      "Bash(python -m py_compile main.py components.py interface.py)"
-    ]
-  }
-}
