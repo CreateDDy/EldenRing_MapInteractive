@@ -11,7 +11,7 @@ def get_files_recursive(folder, extension):
                 file_list.append(rel_path.replace("\\", "/"))
     return file_list
 
-files = [f"DATA/{f}" for f in os.listdir("DATA") if f.endswith(".json")]
+files = get_files_recursive("DATA", ".json")
 files += get_files_recursive("icons", ".png")
 try:
     with open("version.json", "r", encoding="utf-8") as f:

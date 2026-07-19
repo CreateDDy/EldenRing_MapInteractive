@@ -1,0 +1,294 @@
+{
+  "surface": [
+    {
+      "id": "godrick",
+      "x": 3071,
+      "y": 6427,
+      "name_ru": "Годрик Сторукий",
+      "name_en": "Godrick the Grafted",
+      "description_ru": "Один из шести полубогов. Обязательный босс.",
+      "description_en": "One of the six demigods. Mandatory boss.",
+      "image": "godrick.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Сторуком",
+        "en": "Remembrance of the Grafted"
+    },
+            "godrick_great_rune",
+            
+    {
+        "ru": "Руны 20000",
+        "en": "Runes 20000"
+    }
+],
+      "resistances": {
+        "phys": 0, "strike": 0, "slash": 0, "pierce": 0, "magic": 20, "fire": 20, "lightning": 20, "holy": 40,
+        "poison": 318, "rot": 318, "bleed": 318, "frost": 318, "sleep": 318, "madness": "inf", "death": "inf", "poise": 105
+      }
+    },
+    {
+      "id": "fire_giant",
+      "x": 6392,
+      "y": 3164,
+      "name_ru": "Огненный великан",
+      "name_en": "Fire Giant",
+      "description_ru": "Последний выживший великан войны с богами. Обязательный босс на пути в Каменный Фарум Азула.",
+      "description_en": "The last known survivor of the war against the giants. Mandatory boss on the path to Crumbling Farum Azula.",
+      "image": "fire_giant.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание об огненном великане",
+        "en": "Remembrance of the Fire Giant"
+    },
+    {
+        "ru": "Руны 180000",
+        "en": "Runes 180000"
+    }
+],
+      "resistances": {
+        "phys": 0, "strike": 0, "slash": -10, "pierce": 0, "magic": 0, "fire": 50, "lightning": 0, "holy": 20,
+        "poison": 566, "rot": 566, "bleed": 566, "frost": 1217, "sleep": 566, "madness": "inf", "death": "inf"
+      }
+    },
+    {
+      "id": "rennala",
+      "x": 1821,
+      "y": 4809,
+      "name_ru": "Реннала, Полнолунная королева",
+      "name_en": "Rennala, Queen of the Full Moon",
+      "description_ru": "Одна из шести полубогов. Обязательный босс в Академии Райи Лукарии.",
+      "description_en": "One of the six demigods. Mandatory boss in Raya Lucaria Academy.",
+      "image": "rennala.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Полнолунной королеве",
+        "en": "Remembrance of the Full Moon Queen"
+    },
+            "rennala_great_rune",
+    {
+        "ru": "Руны 40000",
+        "en": "Runes 40000"
+    }
+],
+      "resistances": {
+        "phys": -10, "strike": 0, "slash": -10, "pierce": -10, "magic": 80, "fire": 20, "lightning": 20, "holy": 20,
+        "poison": 326, "rot": 326, "bleed": 326, "frost": 326, "sleep": "inf", "madness": "inf"
+      }
+    },
+    {
+      "id": "radahn",
+      "x": 6418,
+      "y": 6720,
+      "name_ru": "Радан, Бич Звёзд",
+      "name_en": "Starscourge Radahn",
+      "description_ru": "Один из шести полубогов. Необязательный, но крайне тяжёлый босс в Каэлиде — фестиваль Радана.",
+      "description_en": "One of the six demigods. Optional but extremely tough boss in Caelid — Radahn's Festival.",
+      "image": "radahn.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Биче Звёзд",
+        "en": "Remembrance of the Starscourge"
+    },
+            "radahn_great_rune",
+    {
+        "ru": "Руны 70000",
+        "en": "Runes 70000"
+    }
+],
+      "resistances": {
+        "phys": 10, "strike": 10, "slash": 10, "pierce": 0, "magic": 20, "fire": 20, "lightning": 20, "holy": 40,
+        "poison": 334, "rot": 243, "bleed": 334, "frost": 334, "sleep": 548, "madness": "inf"
+      }
+    },
+    {
+      "id": "morgott",
+      "x": 4566,
+      "y": 3766,
+      "name_ru": "Морготт, король Знамений",
+      "name_en": "Morgott, the Omen King",
+      "description_ru": "Один из шести полубогов. Обязательный босс на троне Элдена в Лейнделле.",
+      "description_en": "One of the six demigods. Mandatory boss on the Elden Throne in Leyndell.",
+      "image": "morgott.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о короле Знамений",
+        "en": "Remembrance of the Omen King"
+    },
+            "morgott_great_rune",
+    {
+        "ru": "Руны 120000",
+        "en": "Runes 120000"
+    }
+],
+      "resistances": {
+        "phys": 0, "strike": 0, "slash": -10, "pierce": 0, "magic": 0, "fire": 0, "lightning": 0, "holy": 40,
+        "poison": 337, "rot": 337, "bleed": 337, "frost": 337, "sleep": 552, "madness": "inf"
+      }
+    },
+    {
+      "id": "rykard",
+      "x": 2294,
+      "y": 2941,
+      "name_ru": "Рикард, богохульный владыка",
+      "name_en": "Rykard, Lord of Blasphemy",
+      "description_ru": "Один из шести полубогов. Обязательный босс в Манор Вулкан на горе Гельмир.",
+      "description_en": "One of the six demigods. Mandatory boss in Volcano Manor on Mt. Gelmir.",
+      "image": "rykard.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о богохульном владыке",
+        "en": "Remembrance of the Blasphemous"
+    },
+            "rykard_great_rune",
+    {
+        "ru": "Руны 130000",
+        "en": "Runes 130000"
+    }
+],
+      "resistances": {
+        "phys": 10, "strike": 35, "slash": 10, "pierce": 10, "magic": 40, "fire": 80, "lightning": 20, "holy": 40,
+        "poison": 556, "rot": 556, "bleed": 556, "frost": 247, "sleep": 556, "madness": "inf"
+      }
+    },
+    {
+      "id": "malenia",
+      "x": 5623,
+      "y": 891,
+      "name_ru": "Маления, клинок Микеллы",
+      "name_en": "Malenia, Blade of Miquella",
+      "description_ru": "Один из шести полубогов. Необязательный, но самый тяжёлый босс, в Эльфаэле, оплоте Хейлигтри.",
+      "description_en": "One of the six demigods. Optional but the hardest boss, in Elphael, Brace of the Haligtree.",
+      "image": "malenia.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Богине гнили",
+        "en": "Remembrance of the Rot Goddess"
+    },
+            "malenia_great_rune",
+    {
+        "ru": "Руны 480000",
+        "en": "Runes 480000"
+    }
+],
+      "resistances": {
+        "phys": 10, "strike": 10, "slash": 10, "pierce": 10, "magic": 20, "fire": 0, "lightning": 20, "holy": 40,
+        "poison": 1481, "rot": 1481, "bleed": 421, "frost": 306, "sleep": 689, "madness": "inf"
+      }
+    },
+    {
+      "id": "maliketh",
+      "x": 8715,
+      "y": 4453,
+      "name_ru": "Маликет Чёрный Клинок",
+      "name_en": "Maliketh, the Black Blade",
+      "description_ru": "Хранитель руны смерти. Обязательный босс в Каменном Фарум Азула, из двух фаз (Зверь-Клирик и сам Маликет).",
+      "description_en": "Guardian of the Rune of Death. Mandatory boss in Crumbling Farum Azula, two phases (Beast Clergyman and Maliketh himself).",
+      "image": "maliketh.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Чёрном клинке",
+        "en": "Remembrance of the Black Blade"
+    },
+    {
+        "ru": "Руны 220000",
+        "en": "Runes 220000"
+    }
+],
+      "resistances": {
+        "phys": 35, "strike": 35, "slash": 35, "pierce": 35, "magic": 40, "fire": 40, "lightning": 40, "holy": 80,
+        "poison": 351, "rot": 351, "bleed": 574, "frost": 574, "sleep": 2277, "madness": "inf"
+      }
+    },
+    {
+      "id": "godfrey",
+      "x": 4602,
+      "y": 3797,
+      "name_ru": "Годфри, первый повелитель Элдена",
+      "name_en": "Godfrey, First Elden Lord",
+      "description_ru": "Необязательный предварительный бой перед истинным финальным боссом, у Расколотой Марики в Пепельной столице. В середине боя превращается в Хоара Лоукса.",
+      "description_en": "Optional preliminary fight before the true final boss, at Fractured Marika in the Ashen Capital. Transforms into Hoarah Loux mid-fight.",
+      "image": "godfrey.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Хоара Лоуксе",
+        "en": "Remembrance of Hoarah Loux"
+    },
+    {
+        "ru": "Руны 300000",
+        "en": "Runes 300000"
+    }
+],
+      "resistances": {
+        "phys": 10, "strike": 10, "slash": 10, "pierce": 0, "magic": 20, "fire": 20, "lightning": 0, "holy": 40,
+        "poison": 367, "rot": 367, "bleed": 601, "frost": 601, "sleep": 601, "madness": "inf"
+      }
+    },
+    {
+      "id": "radagon_elden_beast",
+      "x": 4657,
+      "y": 3876,
+      "name_ru": "Радагон / Элден Бист",
+      "name_en": "Radagon / Elden Beast",
+      "description_ru": "Истинный финальный босс игры, две фазы одного боя. Элден Бист лечится святым уроном — не используйте его против него.",
+      "description_en": "The true final boss of the game, two phases of one fight. Elden Beast is healed by Holy damage — do not use it against it.",
+      "phases": [
+        {
+            "title_ru": "Радагон, Осколок Изначальной руны",
+            "title_en": "Radagon of the Broken Rune",
+            "image": "radagon.png",
+            "resistances": {
+                "phys": 35, "strike": 10, "slash": 35, "pierce": 35, "magic": 20, "fire": 0, "lightning": 20, "holy": 80,
+                "poison": 627, "rot": 627, "bleed": "inf", "frost": 627, "sleep": "inf", "madness": "inf"
+            }
+        },
+        {
+            "title_ru": "Элден Бист",
+            "title_en": "Elden Beast",
+            "image": "elden_beast.png",
+            "resistances": {
+                "phys": 10, "strike": 10, "slash": 10, "pierce": 10, "magic": 40, "fire": 40, "lightning": 40, "holy": 80,
+                "poison": "inf", "rot": "inf", "bleed": "inf", "frost": "inf", "sleep": "inf", "madness": "inf"
+            }
+        }
+      ],
+      "loot_items": [
+    {
+        "ru": "Воспоминание об Элдене",
+        "en": "Elden Remembrance"
+    },
+    {
+        "ru": "Руны 500000",
+        "en": "Runes 500000"
+    }
+]
+    }
+  ],
+  "underground": [
+    {
+      "id": "mohg",
+      "x": 5281,
+      "y": 6784,
+      "name_ru": "Мог, Повелитель Крови",
+      "name_en": "Mohg, Lord of Blood",
+      "description_ru": "Один из шести полубогов. Обязательный босс в Ковчеге Могвин, доступен через Кокон Неземных.",
+      "description_en": "One of the six demigods. Mandatory boss in Mohgwyn Palace, reached via the Cocoon of the Empyrean.",
+      "image": "mohg.png",
+      "loot_items": [
+    {
+        "ru": "Воспоминание о Повелителе Крови",
+        "en": "Remembrance of the Blood Lord"
+    },
+            "mohg_great_rune",
+    {
+        "ru": "Руны 420000",
+        "en": "Runes 420000"
+    }
+],
+      "resistances": {
+        "phys": 10, "strike": 10, "slash": 10, "pierce": 10, "magic": 40, "fire": 80, "lightning": 40, "holy": 40,
+        "poison": 653, "rot": 653, "bleed": 290, "frost": 653, "sleep": 1406, "madness": "inf"
+      }
+    }
+  ],
+  "dlc": []
+}
