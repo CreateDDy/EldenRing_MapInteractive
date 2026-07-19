@@ -182,4 +182,5 @@ cython_debug/
 /maps
 /icons
 /saves
-/saves
+/.claude
+/icons/waypoint_icons
