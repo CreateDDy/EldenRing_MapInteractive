@@ -1,0 +1,9 @@
+QToolTip {
+    font-family: "Georgia", serif;
+    font-size: 14pt;
+    color: #e8dcc2; 
+    background-color: rgba(15, 15, 15, 90); 
+    border: 1px solid #8b7355; 
+    padding: 1px 2px;
+    border-radius: 2px;
+}
