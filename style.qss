@@ -1,9 +1,381 @@
 QToolTip {
     font-family: "Georgia", serif;
     font-size: 14pt;
-    color: #e8dcc2; 
-    background-color: rgba(15, 15, 15, 90); 
-    border: 1px solid #8b7355; 
+    color: #e8dcc2;
+    background-color: rgba(15, 15, 15, 90);
+    border: 1px solid #8b7355;
     padding: 1px 2px;
     border-radius: 2px;
+}
+
+/* ============================================================
+   Общий стиль остального приложения. Раньше эти правила
+   дублировались как inline setStyleSheet() почти в каждом
+   классе interface.py/components.py. Здесь они собраны в одном
+   месте и скопированы селекторами по имени класса (плюс
+   objectName там, где внутри одного класса несколько разных
+   стилей на однотипных виджетах).
+   Точечные data-driven стили (цвета резистов/статов, зависящие
+   от данных предмета) остаются inline — их нельзя вынести в
+   статический QSS без введения динамических свойств.
+   ============================================================ */
+
+/* ---------- CollapsibleSection ---------- */
+CollapsibleSection QToolButton {
+    border: none;
+    font-weight: bold;
+    color: #d4a956;
+    text-align: left;
+    padding: 10px 0px 5px 0px;
+    font-size: 14px;
+}
+CollapsibleSection QToolButton:hover {
+    color: #ffffff;
+}
+
+/* ---------- CustomInputDialog (профиль: новое имя) ---------- */
+CustomInputDialog {
+    background-color: #1c1c1c;
+    border: 2px solid #8b7355;
+}
+CustomInputDialog QLabel {
+    color: #d4a956;
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    border: none;
+}
+CustomInputDialog QLabel#dialogTitle {
+    color: #ffaa00;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+CustomInputDialog QLineEdit {
+    background-color: #2d2d2d;
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    padding: 6px;
+    font-size: 16px;
+    font-family: 'Georgia', serif;
+}
+CustomInputDialog QPushButton {
+    background-color: rgba(40, 40, 40, 200);
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    border-radius: 3px;
+    padding: 6px 15px;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+}
+CustomInputDialog QPushButton:hover {
+    background-color: rgba(70, 70, 70, 240);
+    border-color: #ffaa00;
+}
+
+/* ---------- MainMenu ---------- */
+MainMenu QPushButton {
+    font-family: "Georgia", serif;
+    font-size: 16pt;
+    color: #e8dcc2;
+    background-color: rgba(26, 26, 26, 220);
+    border: 2px solid #8b7355;
+    padding: 10px;
+    border-radius: 5px;
+}
+MainMenu QPushButton:hover {
+    background-color: rgba(42, 42, 42, 240);
+    border-color: #ffaa00;
+}
+MainMenu QPushButton:disabled {
+    color: #555;
+    border-color: #333;
+    background-color: rgba(26, 26, 26, 150);
+}
+MainMenu QComboBox {
+    background-color: rgba(26, 26, 26, 220);
+    color: #e8dcc2;
+    border: 2px solid #8b7355;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14pt;
+    font-family: "Georgia", serif;
+}
+MainMenu QComboBox QAbstractItemView {
+    background-color: #1a1a1a;
+    color: #e8dcc2;
+    selection-background-color: #3d3d3d;
+}
+
+/* Мини-кнопки профиля (Создать/Удалить) — переопределяют базовый QPushButton выше */
+MainMenu QPushButton#btn_create_profile,
+MainMenu QPushButton#btn_delete_profile {
+    background-color: rgba(40, 40, 40, 200);
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    border-radius: 3px;
+    font-family: "Georgia", serif;
+    font-size: 15px;
+    padding: 4px;
+}
+MainMenu QPushButton#btn_create_profile:hover,
+MainMenu QPushButton#btn_delete_profile:hover {
+    background-color: rgba(70, 70, 70, 240);
+    border-color: #ffaa00;
+}
+MainMenu QPushButton#btn_delete_profile {
+    background-color: rgba(140, 40, 40, 200);
+}
+
+/* Прозрачные квадратные кнопки соцсетей (GitHub/itch/Nexus) */
+MainMenu QPushButton#btn_github,
+MainMenu QPushButton#btn_itch,
+MainMenu QPushButton#btn_nexus {
+    background-color: transparent;
+    border: none;
+}
+MainMenu QPushButton#btn_github:hover,
+MainMenu QPushButton#btn_itch:hover,
+MainMenu QPushButton#btn_nexus:hover {
+    background-color: rgba(255, 255, 255, 20);
+    border-radius: 5px;
+}
+
+MainMenu QWidget#loadingOverlay {
+    background-color: rgba(0, 0, 0, 150);
+}
+MainMenu QLabel#loadingIcon {
+    background-color: transparent;
+}
+
+/* ---------- MapScreen (сайдбар карты) ---------- */
+/* Оригинал красил голым "QWidget{}", что каскадом красило и вложенные
+   QWidget-потомки (CollapsibleSection и её content_area, base/dlc_cat_widget) —
+   поэтому нужен явный descendant-селектор, а не только сам сайдбар. */
+MapScreen QWidget#mapSidebar,
+MapScreen QWidget#mapSidebar QWidget {
+    background-color: #1c1c1c;
+    color: #c4bca2;
+    font-family: 'Segoe UI', serif;
+}
+MapScreen QWidget#mapSidebar QLineEdit {
+    background-color: #2d2d2d;
+    border: 1px solid #c4bca2;
+    padding: 5px;
+    color: white;
+}
+MapScreen QWidget#mapSidebar QPushButton {
+    background-color: #2d2d2d;
+    border: 1px solid #5a5a5a;
+    padding: 8px;
+}
+MapScreen QWidget#mapSidebar QPushButton:hover {
+    background-color: #3d3d3d;
+}
+MapScreen QWidget#mapSidebar QCheckBox {
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+MapScreen QWidget#mapSidebar QLabel#sidebarTitle {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d4a956;
+    text-align: center;
+}
+MapScreen QWidget#mapSidebar QFrame#sidebarDivider {
+    color: #5a5a5a;
+}
+MapScreen QPushButton#btn_toggle_sidebar {
+    background-color: #1c1c1c;
+    color: #d4a956;
+    font-size: 22px;
+    border: 2px solid #5a5a5a;
+    border-radius: 5px;
+    font-weight: bold;
+}
+MapScreen QPushButton#btn_toggle_sidebar:hover {
+    background-color: #3d3d3d;
+    border-color: #d4a956;
+}
+
+/* ---------- MarkerInfoWindow (карточка маркера/босса) ---------- */
+MarkerInfoWindow {
+    background-color: rgba(20, 20, 20, 245);
+    border: 2px solid #8b7355;
+    border-radius: 5px;
+}
+MarkerInfoWindow QLabel {
+    font-family: "Georgia", serif;
+    color: #e8dcc2;
+}
+
+/* ---------- ItemTooltip (карточка предмета) ---------- */
+/* Оригинал красил голым "QWidget{}", что каскадом красило и вложенные
+   контейнеры (create_centered_block) и QFrame-разделители — поэтому
+   здесь тоже нужен явный descendant-селектор, а не только сам виджет. */
+ItemTooltip,
+ItemTooltip QWidget {
+    background-color: #2b2b2b;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+}
+ItemTooltip QLabel {
+    border: none;
+    background: transparent;
+    font-family: 'Georgia', serif;
+}
+
+/* ---------- LootLabel (сырой текст vs резолвленный предмет) ---------- */
+LootLabel[variant="raw"] {
+    color: #cbd5e1;
+    font-size: 13px;
+    padding: 6px;
+    background-color: rgba(40, 40, 40, 100);
+    border: 1px solid #4a4a4a;
+    border-radius: 3px;
+    font-family: 'Georgia', serif;
+}
+LootLabel[variant="resolved"] {
+    color: #e8dcc2;
+    font-size: 13px;
+    padding: 6px;
+    background-color: rgba(40, 40, 40, 150);
+    border: 1px solid #5a5a5a;
+    border-radius: 3px;
+    font-family: 'Georgia', serif;
+}
+LootLabel[variant="resolved"]:hover {
+    background-color: rgba(70, 70, 70, 200);
+    border-color: #d4a956;
+    color: #d4a956;
+}
+
+/* ---------- ItemsScreen (база предметов) ---------- */
+ItemsScreen {
+    background-color: #2b2b2b;
+}
+ItemsScreen QTreeWidget {
+    background-color: #1c1c1c;
+    color: #cbd5e1;
+    border: 1px solid #4a4a4a;
+    font-size: 14px;
+}
+ItemsScreen QScrollArea {
+    background-color: #2b2b2b;
+    border: none;
+}
+ItemsScreen QWidget#DetailsContainer {
+    background-color: #2b2b2b;
+}
+ItemsScreen QLabel {
+    color: #c4bca2;
+    font-family: 'Georgia', serif;
+}
+ItemsScreen QLineEdit {
+    background-color: #1a1a1a;
+    color: #cbd5e1;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    padding: 8px;
+}
+ItemsScreen QLabel#itemsTitle {
+    color: #d4a956;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+}
+ItemsScreen QPushButton#itemsBtnBack {
+    background-color: #2d2d2d;
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    border-radius: 4px;
+    font-size: 14px;
+}
+ItemsScreen QPushButton#itemsBtnBack:hover {
+    background-color: #3d3d3d;
+    border-color: #ffaa00;
+}
+ItemsScreen QLineEdit#itemsSearchBar {
+    background-color: #2d2d2d;
+    color: #cbd5e1;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 14px;
+}
+ItemsScreen QLineEdit#itemsSearchBar:focus {
+    border-color: #d4a956;
+}
+ItemsScreen QTreeWidget::item:hover {
+    background-color: #2a2a2a;
+}
+ItemsScreen QTreeWidget::item:selected {
+    background-color: #3d3d3d;
+    color: #d4a956;
+}
+ItemsScreen QScrollArea#itemsDetailsScroll {
+    border: none;
+    background-color: transparent;
+}
+ItemsScreen QSplitter::handle {
+    background: transparent;
+}
+ItemsScreen QPushButton#btn_location {
+    background-color: #2d2d2d;
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+ItemsScreen QPushButton#btn_location:hover {
+    background-color: #3d3d3d;
+    border-color: #ffaa00;
+}
+
+/* ---------- components.py: WaypointSelector ---------- */
+WaypointSelector {
+    background-color: #1c1c1c;
+    border: 2px solid #8b7355;
+    border-radius: 5px;
+}
+WaypointSelector QPushButton {
+    background-color: #2d2d2d;
+    border: 1px solid #5a5a5a;
+}
+WaypointSelector QPushButton:hover {
+    background-color: #555;
+    border-color: #d4a956;
+}
+
+/* ---------- components.py: WaypointInputDialog ---------- */
+WaypointInputDialog {
+    background-color: #1c1c1c;
+    border: 2px solid #8b7355;
+    border-radius: 5px;
+}
+WaypointInputDialog QLabel {
+    color: #d4a956;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    border: none;
+}
+WaypointInputDialog QLineEdit {
+    background-color: #2d2d2d;
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    padding: 5px;
+    font-family: 'Georgia', serif;
+}
+WaypointInputDialog QPushButton {
+    background-color: rgba(40, 40, 40, 200);
+    color: #e8dcc2;
+    border: 1px solid #8b7355;
+    border-radius: 3px;
+    padding: 5px 15px;
+}
+WaypointInputDialog QPushButton:hover {
+    background-color: rgba(70, 70, 70, 240);
+    border-color: #ffaa00;
 }
