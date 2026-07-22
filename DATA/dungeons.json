@@ -1,0 +1,489 @@
+{
+    "surface": {
+        "Limgrave": [
+            {
+                "x": 3763,
+                "y": 7310,
+                "id": 18001,
+                "name_ru": "Могила героя окраин",
+                "name_en": "Fringefolk Hero's Grave"
+            },
+            {
+                "x": 3491,
+                "y": 7325,
+                "id": 10670174,
+                "name_ru": "Прибрежная пещера",
+                "name_en": "Coastal Cave"
+            },
+            {
+                "x": 3508,
+                "y": 7064,
+                "id": 10670162,
+                "name_ru": "Катакомбы под скалой",
+                "name_en": "Stormfoot Catacombs"
+            },
+            {
+                "x": 4059,
+                "y": 6737,
+                "id": 10670164,
+                "name_ru": "Грязные катакомбы",
+                "name_en": "Murkwater Catacombs"
+            },
+            {
+                "x": 3637,
+                "y": 7049,
+                "id": 10670173,
+                "name_ru": "Лесная пещера",
+                "name_en": "Groveside Cave"
+            },
+            {
+                "x": 4045,
+                "y": 6976,
+                "id": 10670172,
+                "name_ru": "Грязная пещера",
+                "name_en": "Murkwater Cave"
+            },
+            {
+                "x": 4010,
+                "y": 6424,
+                "id": 10670175,
+                "name_ru": "Пещера под дорогой",
+                "name_en": "Highroad Cave"
+            },
+            {
+                "x": 3834,
+                "y": 7047,
+                "id": 10670181,
+                "name_ru": "Туннель Замогилья",
+                "name_en": "Limgrave Tunnels"
+            }
+        ],
+        "Stranded_graveyard": [
+            {
+                "x": 3777,
+                "y": 7349,
+                "id": 180000,
+                "name_ru": "Пещера знаний",
+                "name_en": "Cave of Knowledge"
+            }
+        ],
+        "Stormhill": [
+            {
+                "x": 3863,
+                "y": 6485,
+                "id": 10670163,
+                "name_ru": "Помертвелые катакомбы",
+                "name_en": "Deathtouched Catacombs"
+            }
+        ],
+        "Weeping_Peninsula": [
+            {
+                "x": 4452,
+                "y": 7876,
+                "id": 10670161,
+                "name_ru": "Катакомбы Колосажателя",
+                "name_en": "Impaler's Catacombs"
+            },
+            {
+                "x": 3855,
+                "y": 7955,
+                "id": 10670160,
+                "name_ru": "Ведущие в гробницу катакомбы",
+                "name_en": "Tombsward Catacombs"
+            },
+            {
+                "x": 4137,
+                "y": 7867,
+                "id": 10670171,
+                "name_ru": "Подземная пещера",
+                "name_en": "Earthbore Cave"
+            },
+            {
+                "x": 3608,
+                "y": 8059,
+                "id": 10670170,
+                "name_ru": "Ведущая к гробнице пещера",
+                "name_en": "Tombsward Cave"
+            },
+            {
+                "x": 4008,
+                "y": 8151,
+                "id": 10670180,
+                "name_ru": "Туннель Морна",
+                "name_en": "Morne Tunnel"
+            }
+        ],
+        "Liurnia of the Lakes": [
+            {
+                "x": 2561,
+                "y": 3617,
+                "id": 10670240,
+                "name_ru": "Усыпанный руинами обрыв",
+                "name_en": "Ruin-Strewn Precipice"
+            },
+            {
+                "x": 2309,
+                "y": 4455,
+                "id": 10670280,
+                "name_ru": "Кристальный туннель Райи Лукарии",
+                "name_en": "Raya Lucaria Crystal Tunnel"
+            },
+            {
+                "x": 3049,
+                "y": 5959,
+                "id": 10670262,
+                "name_ru": "Катакомбы под утёсом",
+                "name_en": "Cliffbottom Catacombs"
+            },
+            {
+                "x": 1382,
+                "y": 5472,
+                "id": 10670261,
+                "name_ru": "Катакомбы у тупика",
+                "name_en": "Road's End Catacombs"
+            },
+            {
+                "x": 2860,
+                "y": 4118,
+                "id": 10670260,
+                "name_ru": "Катакомбы Чёрного ножа",
+                "name_en": "Black Knife Catacombs"
+            },
+            {
+                "x": 2956,
+                "y": 6287,
+                "id": 10670270,
+                "name_ru": "Пещера тихого омута",
+                "name_en": "Stillwater Cave"
+            },
+            {
+                "x": 2315,
+                "y": 5974,
+                "id": 10670271,
+                "name_ru": "Кристальная береговая пещера",
+                "name_en": "Lakeside Crystal Cave"
+            },
+            {
+                "x": 1731,
+                "y": 4866,
+                "id": 10670272,
+                "name_ru": "Кристальная пещера академии",
+                "name_en": "Academy Crystal Cave"
+            }
+        ],
+        "Altus_Plateau": [
+            {
+                "x": 5374,
+                "y": 2803,
+                "id": 10670563,
+                "name_ru": "Тайный путь к Святому Древу",
+                "name_en": "Hidden Path to the Haligtree"
+            },
+            {
+                "x": 3505,
+                "y": 3441,
+                "id": 10670372,
+                "name_ru": "Грот парфюмера",
+                "name_en": "Perfumer's Grotto"
+            },
+            {
+                "x": 2147,
+                "y": 3318,
+                "id": 10670363,
+                "name_ru": "Отвратительные катакомбы",
+                "name_en": "Unsightly Catacombs"
+            },
+            {
+                "x": 3238,
+                "y": 3198,
+                "id": 10670360,
+                "name_ru": "Могила героя-святого",
+                "name_en": "Sainted Hero's Grave"
+            },
+            {
+                "x": 2513,
+                "y": 3284,
+                "id": 10670373,
+                "name_ru": "Пещера мудреца",
+                "name_en": "Sage's Cave"
+            },
+            {
+                "x": 2782,
+                "y": 3048,
+                "id": 10670380,
+                "name_ru": "Старый туннель Альтуса",
+                "name_en": "Old Altus Tunnel"
+            },
+            {
+                "x": 3404,
+                "y": 3153,
+                "id": 10670381,
+                "name_ru": "Туннель Альтуса",
+                "name_en": "Altus Tunnel"
+            }
+        ],
+        "Mt._Gelmir": [
+            {
+                "x": 2608,
+                "y": 3071,
+                "id": 10670364,
+                "name_ru": "Катакомбы Виндхэма",
+                "name_en": "Wyndham Catacombs"
+            },
+            {
+                "x": 2529,
+                "y": 2928,
+                "id": 10670361,
+                "name_ru": "Могила героя Гельмира",
+                "name_en": "Gelmir Hero's Grave"
+            },
+            {
+                "x": 2432,
+                "y": 2808,
+                "id": 10670370,
+                "name_ru": "Пещера Кипящей реки",
+                "name_en": "Seethewater Cave"
+            },
+            {
+                "x": 2356,
+                "y": 2484,
+                "id": 10670371,
+                "name_ru": "Вулканическая пещера",
+                "name_en": "Volcano Cave"
+            }
+        ],
+        "Capital_Outskirts": [
+            {
+                "x": 4591,
+                "y": 3200,
+                "id": 301300,
+                "name_ru": "Боковая гробница Аурицы",
+                "name_en": "Auriza Side Tomb"
+            },
+            {
+                "x": 4540,
+                "y": 3320,
+                "id": 10670362,
+                "name_ru": "Могила героя Аурицы",
+                "name_en": "Auriza Hero's Grave"
+            },
+            {
+                "x": 3904,
+                "y": 3644,
+                "id": 10670390,
+                "name_ru": "Запечатанный туннель",
+                "name_en": "Sealed Tunnel"
+            }
+        ],
+        "Subterranean_Shunning-Grounds": [
+            {
+                "x": 4370,
+                "y": 3544,
+                "id": 10670342,
+                "name_ru": "Катакомбы Лейнделла",
+                "name_en": "Leyndell Catacombs"
+            }
+        ],
+        "Caelid": [
+            {
+                "x": 4961,
+                "y": 6196,
+                "id": 10670460,
+                "name_ru": "Катакомбы малого Древа Эрд",
+                "name_en": "Minor Erdtree Catacombs"
+            },
+            {
+                "x": 5361,
+                "y": 7230,
+                "id": 10670461,
+                "name_ru": "Катакомбы Звёздных пустошей",
+                "name_en": "Caelid Catacombs"
+            },
+            {
+                "x": 6343,
+                "y": 6122,
+                "id": 10670472,
+                "name_ru": "Заброшенная пещера",
+                "name_en": "Abandoned Cave"
+            },
+            {
+                "x": 4933,
+                "y": 6763,
+                "id": 10670470,
+                "name_ru": "Тюремная пещера",
+                "name_en": "Gaol Cave"
+            },
+            {
+                "x": 4725,
+                "y": 6425,
+                "id": 320701,
+                "name_ru": "Чёрный ход в туннель Гаэля",
+                "name_en": "Rear Gael Tunnel Entrance"
+            },
+            {
+                "x": 5514,
+                "y": 6394,
+                "id": 10670481,
+                "name_ru": "Кристальный туннель Селлии",
+                "name_en": "Sellia Crystal Tunnel"
+            }
+        ],
+        "Greyoll's_Dragonbarrow": [
+            {
+                "x": 6007,
+                "y": 6181,
+                "id": 10670471,
+                "name_ru": "Пещера Драконьего кургана",
+                "name_en": "Dragonbarrow Cave"
+            },
+            {
+                "x": 5410,
+                "y": 6493,
+                "id": 10670472,
+                "name_ru": "Заброшенная пещера",
+                "name_en": "Abandoned Cave"
+            },
+            {
+                "x": 5881,
+                "y": 6454,
+                "id": 10670473,
+                "name_ru": "Убежище в Селлии",
+                "name_en": "Sellia Hideaway"
+            }
+        ],
+        "Mountaintops_of_the_Giants": [
+            {
+                "x": 6496,
+                "y": 2078,
+                "id": 10670571,
+                "name_ru": "Пещера призывателя душ",
+                "name_en": "Spiritcaller Cave"
+            },
+            {
+                "x": 5785,
+                "y": 2803,
+                "id": 301800,
+                "name_ru": "Катакомбы на Вершине великанов",
+                "name_en": "Giants' Mountaintop Catacombs"
+            },
+            {
+                "x": 5669,
+                "y": 2822,
+                "id": 301700,
+                "name_ru": "Могила героя, победителя великанов",
+                "name_en": "Giant-Conquering Hero's Grave"
+            }
+        ],
+        "Consecrated_Snowfield": [
+            {
+                "x": 5678,
+                "y": 2497,
+                "id": 10670562,
+                "name_ru": "Катакомбы под священным полем",
+                "name_en": "Consecrated Snowfield Catacombs"
+            },
+            {
+                "x": 5694,
+                "y": 2143,
+                "id": 10670570,
+                "name_ru": "Пещера забытых",
+                "name_en": "Cave of the Forlorn"
+            },
+            {
+                "x": 5047,
+                "y": 2520,
+                "id": 10670580,
+                "name_ru": "Туннель жёлтого аникса",
+                "name_en": "Yelough Anix Tunnel"
+            }
+        ],
+        "Crumbling_Farum_Azula": []
+    },
+    "dlc": {
+        "Gravesite_Plaint": [
+            {
+                "x": 1843,
+                "y": 2950,
+                "id": 10670860,
+                "name_ru": "Катакомбы туманного разлома",
+                "name_en": "Fog Rift Catacombs"
+            },
+            {
+                "x": 1391,
+                "y": 3489,
+                "id": 10670870,
+                "name_ru": "Тюрьма в Белурате",
+                "name_en": "Belurat Gaol"
+            },
+            {
+                "x": 2087,
+                "y": 3823,
+                "id": 420000,
+                "name_ru": "Лавосборник разрушенной кузницы",
+                "name_en": "Ruined Forge Lava Intake"
+            },
+            {
+                "x": 1624,
+                "y": 3242,
+                "id": 10670980,
+                "name_ru": "Пещера у речного устья",
+                "name_en": "Rivermouth Cave"
+            },
+            {
+                "x": 2108,
+                "y": 4139,
+                "id": 10670880,
+                "name_ru": "Драконья яма",
+                "name_en": "Dragon's Pit"
+            }
+        ],
+        "Charo's_Hidden_Grave": [
+            {
+                "x": 1786,
+                "y": 4412,
+                "id": 10670871,
+                "name_ru": "Тюрьма плакальщика",
+                "name_en": "Lamenter's Gaol"
+            }
+        ],
+        "Scadu_Altus": [
+            {
+                "x": 2933,
+                "y": 3527,
+                "id": 10670961,
+                "name_ru": "Сумрачные катакомбы",
+                "name_en": "Darklight Catacombs"
+            },
+            {
+                "x": 2692,
+                "y": 3665,
+                "id": 10670970,
+                "name_ru": "Тюрьма в Бонни",
+                "name_en": "Bonny Gaol"
+            },
+            {
+                "x": 2266,
+                "y": 3483,
+                "id": 420200,
+                "name_ru": "Разрушенная кузница Звездопада",
+                "name_en": "Ruined Forge of Starfall Past"
+            }
+        ],
+        "Rauh_base": [
+            {
+                "x": 1132,
+                "y": 2786,
+                "id": 400100,
+                "name_ru": "Катакомбы под Скорпионовой рекой",
+                "name_en": "Scorpion River Catacombs"
+            },
+            {
+                "x": 2173,
+                "y": 2460,
+                "id": 420300,
+                "name_ru": "Разрушенная кузница Тейлю",
+                "name_en": "Taylew's Ruined Forge"
+            }
+        ]
+    }
+}

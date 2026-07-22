@@ -1,0 +1,28 @@
+{
+    "dlc": {
+        "mausoleum_coffin": [
+        {
+            "id": "coffin_dlc_1",
+            "x": 2984,
+            "y": 4791,
+            "name_ru": "Саркофаг воспоминаний",
+            "name_en": "Remembrance Coffin"
+        },
+        {
+            "id": "coffin_dlc_2",
+            "x": 2845,
+            "y": 3175,
+            "name_ru": "Саркофаг воспоминаний",
+            "name_en": "Remembrance Coffin"
+        },
+        {
+            "id": "coffin_dlc_3",
+            "x": 3453,
+            "y": 2309,
+            "name_ru": "Саркофаг воспоминаний",
+            "name_en": "Remembrance Coffin"
+        }
+        ]
+    }
+
+}
