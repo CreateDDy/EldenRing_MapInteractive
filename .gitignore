@@ -185,3 +185,9 @@ cython_debug/
 /.claude
 /icons/waypoint_icons
 /CLAUDE.md
+/components.py
+/config.py
+/interface.py
+/localization.py
+/main.py
+/pack.core.py
